@@ -44,10 +44,10 @@ const config: Config = {
     [
       '@docusaurus/plugin-content-docs',
       {
-        id: 'tutorials',
-        path: 'tutorials',
-        routeBasePath: 'tutorials',
-        sidebarPath: './sidebarsTutorials.ts',
+        id: 'docs-getting-started',
+        path: 'docs-getting-started',
+        routeBasePath: 'docs-getting-started',
+        sidebarPath: './sidebarsGettingStarted.ts',
       },
     ],
   ],
@@ -66,16 +66,16 @@ const config: Config = {
       items: [
         {
           type: 'docSidebar',
-          sidebarId: 'docsSidebar',
+          sidebarId: 'gettingStartedSidebar',
+          docsPluginId: 'docs-getting-started',
           position: 'left',
-          label: 'Docs',
+          label: 'Getting Started',
         },
         {
           type: 'docSidebar',
-          sidebarId: 'tutorialsSidebar',
-          docsPluginId: 'tutorials',
+          sidebarId: 'docsSidebar',
           position: 'left',
-          label: 'Tutorials',
+          label: 'Design Docs',
         },
         {
           href: 'https://github.com/twinzom/technical-product-website-template',
@@ -97,11 +97,11 @@ const config: Config = {
           ],
         },
         {
-          title: 'Tutorials',
+          title: 'Getting Started',
           items: [
             {
               label: 'Getting Started',
-              to: '/tutorials/intro',
+              to: '/docs-getting-started/intro',
             },
           ],
         },

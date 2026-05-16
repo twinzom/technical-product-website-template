@@ -1,0 +1,50 @@
+---
+sidebar_position: 1
+---
+
+# Design Docs
+
+This section contains the technical design documentation for our platform. Each document describes the architecture, rationale, and trade-offs behind key system decisions.
+
+## What's in Here
+
+Design docs serve as a living record of how the system was designed and why. They capture context that code alone cannot — the alternatives considered, the constraints that drove decisions, and the expected behavior under edge cases.
+
+## Documents by Area
+
+### Core Architecture
+
+| Document | Status | Last Updated |
+|---|---|---|
+| [System Overview](./intro) | Approved | 2025-01-10 |
+| Data Pipeline Design | Draft | 2025-02-03 |
+| Authentication & Authorization | Approved | 2024-11-22 |
+
+### Component Internals
+
+| Document | Status | Last Updated |
+|---|---|---|
+| Component 1 — Internal Design | In Review | 2025-03-15 |
+| Component 2 — Scaling Strategy | Draft | 2025-04-01 |
+| Event Bus Architecture | Approved | 2024-12-09 |
+
+### Infrastructure
+
+| Document | Status | Last Updated |
+|---|---|---|
+| Deployment Topology | Approved | 2025-01-28 |
+| Observability & Alerting | In Review | 2025-03-22 |
+| Disaster Recovery Plan | Draft | 2025-04-14 |
+
+## Document Lifecycle
+
+All design docs go through the following stages before being considered authoritative:
+
+1. **Draft** — Author is actively writing; content may be incomplete or change significantly.
+2. **In Review** — Shared with stakeholders for feedback; open for comments.
+3. **Approved** — Reviewed and accepted; serves as the source of truth.
+4. **Superseded** — Replaced by a newer document; kept for historical reference.
+
+## Contributing
+
+To propose a new design doc, open a pull request with a new `.mdx` file under `docs/`. Use an existing approved doc as a template and make sure to include the motivation, considered alternatives, and any open questions.
