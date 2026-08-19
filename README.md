@@ -1,6 +1,6 @@
 # Technical Product Website Template
 
-A Docusaurus-based documentation site template with two doc sections — **Getting Started** and **Design Docs** — deployed to GitHub Pages.
+A Docusaurus-based documentation site template with four doc sections — **Product Overview**, **Architecture Design**, **Market Deployment & Operations**, and **Community & Resources** — deployed to GitHub Pages.
 
 Live site: https://twinzom.github.io/technical-product-website-template/
 
@@ -54,12 +54,14 @@ This builds the site and force-pushes the output to `gh-pages`. The live URL upd
 
 ## Add a new page
 
-Pages live inside the two `docs` directories. Pick the section where the page belongs:
+Pages live inside the four `docs` directories. Pick the section where the page belongs:
 
 | Section | Directory |
 |---|---|
-| Getting Started | `docs-getting-started/` |
-| Design Docs | `docs/` |
+| Product Overview | `docs-product-overview/` |
+| Architecture Design | `docs-architecture-design/` |
+| Market Deployment & Operations | `docs-market-deployment/` |
+| Community & Resources | `docs-community-resources/` |
 
 Create an `.mdx` file with a frontmatter block at the top:
 
@@ -81,7 +83,7 @@ Content goes here.
 
 A page group is a folder that groups related pages under a collapsible sidebar section.
 
-1. Create a subfolder inside the target docs directory, e.g. `docs-getting-started/My-Group/`.
+1. Create a subfolder inside the target docs directory, e.g. `docs-product-overview/My-Group/`.
 2. Add an `index.mdx` as the group's landing page (optional but recommended).
 3. Add a `_category_.json` to control the group label and order:
 
@@ -100,7 +102,7 @@ A page group is a folder that groups related pages under a collapsible sidebar s
 Example structure:
 
 ```
-docs-getting-started/
+docs-product-overview/
   My-Group/
     _category_.json
     index.mdx
@@ -114,19 +116,23 @@ docs-getting-started/
 
 ```
 .
-├── docs/                        # Design Docs section
-├── docs-getting-started/        # Getting Started section
+├── docs-product-overview/        # Product Overview section
 │   ├── Component-1/
 │   └── Component-2/
+├── docs-architecture-design/     # Architecture Design section
+├── docs-market-deployment/       # Market Deployment & Operations section
+├── docs-community-resources/     # Community & Resources section
 ├── src/
 │   ├── components/
-│   │   └── HomepageFeatures/    # Feature cards on the home page
-│   ├── css/custom.css           # Global CSS overrides
-│   └── pages/index.tsx          # Home page
-├── static/img/                  # Static assets (logo, favicon, etc.)
-├── docusaurus.config.ts         # Main site configuration
-├── sidebars.ts                  # Sidebar config for Design Docs
-└── sidebarsGettingStarted.ts    # Sidebar config for Getting Started
+│   │   └── HomepageFeatures/     # Feature cards on the home page
+│   ├── css/custom.css            # Global CSS overrides
+│   └── pages/index.tsx           # Home page
+├── static/img/                   # Static assets (logo, favicon, etc.)
+├── docusaurus.config.ts          # Main site configuration
+├── sidebarsProductOverview.ts    # Sidebar config for Product Overview
+├── sidebarsArchitectureDesign.ts # Sidebar config for Architecture Design
+├── sidebarsMarketDeployment.ts   # Sidebar config for Market Deployment & Operations
+└── sidebarsCommunityResources.ts # Sidebar config for Community & Resources
 ```
 
 ---
@@ -146,7 +152,7 @@ All site-wide settings live in [docusaurus.config.ts](docusaurus.config.ts).
 | Syntax highlight theme | `themeConfig.prism` |
 | Add a new docs section | Add an entry to `config.plugins` and create a matching sidebar file |
 
-To add a second additional docs section (beyond the two already present), copy the plugin entry for `docs-getting-started` and update `id`, `path`, `routeBasePath`, and `sidebarPath` to point at the new directory and sidebar file.
+To add another docs section (beyond the four already present), copy one of the existing `@docusaurus/plugin-content-docs` entries in `config.plugins` and update `id`, `path`, `routeBasePath`, and `sidebarPath` to point at the new directory and sidebar file. Then add a matching `docSidebar` item to `themeConfig.navbar.items`.
 
 ---
 

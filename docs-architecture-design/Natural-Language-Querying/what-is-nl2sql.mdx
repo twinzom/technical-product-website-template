@@ -1,0 +1,51 @@
+---
+sidebar_position: 1
+---
+
+# What is NL2SQL?
+
+## Definition
+
+NL2SQL (Natural Language to SQL) is the capability that translates a user's plain-English question — e.g. *"What were our top 5 products by revenue last quarter?"* — into a valid SQL query that can be executed against a database, returning the answer directly instead of requiring the user to know the schema or write SQL themselves.
+
+Under the hood, the NL2SQL engine relies on a large language model (LLM) to do the actual translation from natural language into SQL. The engine's job is to give the LLM the right context (the user's question plus the relevant parts of the database schema) and to validate and execute what the LLM generates — the LLM itself is what turns "top 5 products by revenue last quarter" into the corresponding `SELECT` statement.
+
+## Before NL2SQL: Querying Through Predefined Filters
+
+Today, if a user wants to query data — say, search for products — they're limited to whatever filters and parameters an engineer has already built into the API. A "Product Search" endpoint might let you filter by category, price range, and in-stock status, because those are the filters someone anticipated and shipped. If the user's question doesn't map onto one of those predefined filters, the API simply has no way to answer it — the UI doesn't offer the option, and there's no parameter for it.
+
+![Traditional query flow, bounded by a fixed API contract](/img/architecture-design/traditional-query-flow.drawio.svg)
+
+This is what it means for querying to be **bounded by the API contract**: the set of questions a user can ask is exactly the set of filters/endpoints that have been built in advance. A new kind of question — "products with an above-average margin sold last month in the EU" — requires an engineer to extend the contract (add a filter, a parameter, or a whole new endpoint) before it can be answered at all.
+
+## After NL2SQL: Freeform Questions, Any SQL
+
+NL2SQL removes that ceiling. Because the LLM generates a SQL query directly from the question — rather than mapping the question onto a predefined set of parameters — the user isn't limited to filters anyone thought to build in advance. Any question that can be expressed as a `SELECT` against the schema can be asked, in the user's own words, without changing any code:
+
+![NL2SQL request/response flow](/img/architecture-design/nl2sql-request-response-flow.drawio.svg)
+
+The key difference from the diagram above: there's no fixed contract standing between the question and the data. The "API" for NL2SQL is natural language itself, and the SQL generated on the backend can be as arbitrary and specific as the question requires.
+
+## Why We Need It
+
+- **A "smart filter picker" isn't enough.** It's possible to build something that looks like an AI agent but still only selects from a predefined set of filters or calls a fixed set of tools — dynamic in language, but no more capable underneath than the traditional system it's sitting on top of. That design still caps what can be asked at whatever filters an engineer thought to build in advance; it just adds a friendlier interface over the same ceiling.
+- **The real unlock is schema + SQL, not schema + filters.** Giving the LLM the schema directly and letting it compose the SQL itself lets it reason across combinations of tables, filters, and aggregations that no one predefined. An LLM's ability to write correct SQL against a schema it understands *is* the capability; constraining it to a static set of filters would leave most of that capability unused.
+- **A fixed API can't keep up with the combinations.** Analytical questions combine filters, groupings, time ranges, and joins in ways that are effectively unbounded — covering even a small fraction with dedicated endpoints requires an enormous, constantly growing API surface.
+- **APIs answer "what," not "how to ask."** An endpoint still requires the caller to know which endpoint exists and what parameters it accepts — the same schema/vocabulary knowledge problem NL2SQL is meant to remove, just moved from "SQL knowledge" to "API knowledge."
+- **Every new question is an engineering task.** Each new filter or endpoint requires a developer to design, build, test, and ship it. NL2SQL lets the query itself be generated on demand, so new questions are answered immediately rather than waiting on a backlog.
+- **It loses the flexibility natural language is good at.** Users often refine or follow up on a question ("now break that down by region," "only for enterprise customers") — a fixed API can't accommodate that kind of open-ended, conversational refinement without a matching explosion of parameters.
+
+In short: APIs are the right tool for known, repeated, high-trust access patterns; NL2SQL is the right tool for the long tail of ad hoc, exploratory questions where the space of possible queries is too large and too fluid to predefine.
+
+## Where NL2SQL Fits
+
+NL2SQL is not a replacement for our existing APIs — the two are complementary:
+
+| | Fixed API | NL2SQL |
+|---|---|---|
+| Best for | Known, repeated, high-trust queries (billing, dashboards, automation) | Ad hoc, exploratory, open-ended questions |
+| Performance & predictability | High — reviewed, tested, indexed | Variable — depends on generated query quality |
+| Coverage | Limited to what's been built | Effectively unbounded |
+| Time to answer a new question | Requires engineering work | Immediate |
+
+See [Technical Design](./technical-design) for how the NL2SQL engine itself is built, and [Improving Accuracy](./improving-accuracy) for how we keep generated queries correct and trustworthy.

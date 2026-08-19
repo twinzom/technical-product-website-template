@@ -1,0 +1,100 @@
+---
+sidebar_position: 2
+---
+
+# Technical Design
+
+This document describes the technical architecture of our NL2SQL feature — the components involved, how a request flows through the system, and the key design decisions behind them.
+
+## Architecture Overview
+
+```
+                ┌──────────────────┐
+ User question ─►  Query Preprocessor │
+                └─────────┬─────────┘
+                          ▼
+                ┌──────────────────┐      ┌────────────────────┐
+                │  Schema / Context ├─────►│  Schema & Metadata  │
+                │      Retriever    │      │  Store (tables,     │
+                └─────────┬─────────┘      │  columns, glossary) │
+                          ▼                └────────────────────┘
+                ┌──────────────────┐
+                │   LLM SQL         │
+                │   Generator       │
+                └─────────┬─────────┘
+                          ▼
+                ┌──────────────────┐
+                │  SQL Validator &  │
+                │  Guardrails       │
+                └─────────┬─────────┘
+                          ▼
+                ┌──────────────────┐      ┌────────────────────┐
+                │  Query Executor   ├─────►│      Database       │
+                └─────────┬─────────┘      └────────────────────┘
+                          ▼
+                ┌──────────────────┐
+                │  Result Formatter │
+                │  (table/chart/NL) │
+                └──────────────────┘
+```
+
+## Components
+
+### 1. Query Preprocessor
+
+Normalizes the incoming question: resolves conversational context (e.g. "now filter by region" refers to the previous query), expands abbreviations, and strips anything irrelevant to query generation. For multi-turn sessions, this stage also merges relevant history into a single self-contained question before it goes further down the pipeline.
+
+### 2. Schema & Context Retriever
+
+Rather than passing the entire database schema to the LLM (which is costly and adds noise), this component retrieves only the tables, columns, and business-glossary terms relevant to the question, using a combination of keyword matching and embedding-based similarity search over a maintained schema/metadata store. This store includes:
+
+- Table and column names with descriptions
+- Known joins and foreign-key relationships
+- Business definitions (e.g. what "active user" or "net revenue" means)
+- Example question → query pairs used as few-shot context
+
+### 3. LLM SQL Generator
+
+The retrieved schema context and the user's question are assembled into a prompt sent to an LLM, which generates the candidate SQL query. Key design choices:
+
+- **Constrained generation** — the model is instructed to only reference tables/columns present in the retrieved context, reducing hallucinated identifiers.
+- **Dialect-aware prompting** — the prompt specifies our database's SQL dialect and any query conventions (e.g. required date-range filters, soft-delete handling).
+- **Read-only by construction** — the generator is only ever asked to produce `SELECT` statements; write operations are out of scope for this feature entirely.
+
+### 4. SQL Validator & Guardrails
+
+Before execution, every generated query passes through automated checks:
+
+- **Syntax validation** — the query is parsed to confirm it's valid SQL for our dialect.
+- **Semantic validation** — referenced tables/columns are checked against the real schema.
+- **Policy guardrails** — enforced row-level security, column masking for sensitive fields, mandatory `LIMIT` clauses, and a strict allow-list of `SELECT`-only statements (no `INSERT`/`UPDATE`/`DELETE`/`DROP`/DDL).
+- **Cost/complexity checks** — queries are estimated (e.g. via `EXPLAIN`) and rejected or flagged if they would scan an unreasonable amount of data.
+
+Queries that fail validation are either automatically retried with corrective feedback appended to the prompt, or surfaced to the user as a clarification request rather than executed.
+
+### 5. Query Executor
+
+Executes the validated query against a read replica (never the primary transactional database), with a query timeout and result row cap to protect database performance.
+
+### 6. Result Formatter
+
+Converts the raw result set into the appropriate output — a table, a chart, or a natural-language summary generated from the result data — depending on the shape of the data and how the question was asked.
+
+## Data Flow Summary
+
+1. User submits a question (optionally as part of an ongoing conversation).
+2. The preprocessor resolves it into a standalone question.
+3. Relevant schema/context is retrieved.
+4. The LLM generates a candidate SQL query.
+5. The query is validated against syntax, schema, and security guardrails.
+6. The query executes against a read replica with enforced limits.
+7. Results are formatted and returned to the user, along with the generated SQL for transparency.
+
+## Key Design Principles
+
+- **Read-only, always.** The feature never writes to the database — this eliminates an entire class of risk by design rather than relying solely on runtime checks.
+- **Least-privilege execution.** Queries run under a database role scoped to only the tables/columns the requesting user is permitted to see.
+- **Transparency by default.** The generated SQL is always shown alongside the answer so users (and reviewers) can verify what was actually run.
+- **Fail closed.** If validation is inconclusive or context retrieval has low confidence, the system asks for clarification instead of guessing and executing a possibly-wrong query.
+
+See [Improving Accuracy](./improving-accuracy) for how we measure and improve the correctness of generated queries over time.

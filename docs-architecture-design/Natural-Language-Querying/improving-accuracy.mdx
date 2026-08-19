@@ -1,0 +1,64 @@
+---
+sidebar_position: 3
+---
+
+# Improving the Accuracy of NL2SQL Results
+
+Generating syntactically valid SQL is easy; generating SQL that correctly answers the user's actual question is the hard part. This document covers the techniques we use to improve accuracy, and how we measure it.
+
+## Why Accuracy Is Hard
+
+- **Ambiguity in natural language.** "Recent orders" could mean the last 7 days, the last 30, or "since I last checked." Users often under-specify.
+- **Schema knowledge the model doesn't have by default.** Column names alone don't convey business meaning (e.g. `status = 3` meaning "cancelled").
+- **Joins and aggregation logic.** Getting a `COUNT(DISTINCT ...)` vs `COUNT(...)`, or an `INNER` vs `LEFT JOIN`, wrong silently changes the answer without causing an error.
+- **Silent failures.** Unlike a syntax error, a semantically wrong query still returns a result — often a plausible-looking but incorrect one — which makes wrong answers harder to catch than broken ones.
+
+## Techniques We Use
+
+### 1. Rich Schema & Business Context
+
+The single biggest lever for accuracy is giving the model better context, not a better prompt. We maintain:
+
+- **Column-level descriptions and units** (e.g. `amount_cents` is documented as integer cents, not dollars).
+- **A business glossary** mapping domain terms ("churned," "MRR," "active seat") to their precise query logic.
+- **Canonical table guidance** that steers the model toward approved, up-to-date tables and away from deprecated or staging ones.
+
+This context is kept up to date by data owners as part of the schema change process, not maintained ad hoc by the NL2SQL team alone.
+
+### 2. Few-Shot Examples
+
+We maintain a curated bank of question → correct-SQL pairs covering common and historically error-prone question patterns. The most relevant examples (by similarity to the incoming question) are included in the prompt, which meaningfully improves generation for patterns the model has seen before.
+
+### 3. Clarification Instead of Guessing
+
+When a question is ambiguous (e.g. no time range specified where one materially changes the answer), the system is prompted to ask a clarifying question rather than pick a default silently. This trades a small amount of friction for a large reduction in confidently-wrong answers.
+
+### 4. Self-Correction Loop
+
+If the SQL validator (see [Technical Design](./technical-design)) detects an issue — invalid column reference, a join that would produce a cartesian product, a syntax error — the error is fed back into the prompt and the model is given a bounded number of retries to correct it before falling back to a clarification request.
+
+### 5. Execution-Based Sanity Checks
+
+Beyond static validation, we run lightweight sanity checks on the result itself before returning it: zero-row results are flagged and explained rather than silently shown as "no data," and results with a suspicious row count relative to the question (e.g. a "top 5" question returning 5,000 rows) trigger a re-check.
+
+### 6. Human-in-the-Loop Feedback
+
+Users can flag a result as incorrect directly in the product. Flagged question/query pairs are reviewed and, once confirmed, folded back into the few-shot example bank or used to correct schema/glossary documentation — closing the loop between real usage and the context the model relies on.
+
+## Measuring Accuracy
+
+We track accuracy continuously rather than relying only on anecdotal reports:
+
+| Metric | What it measures |
+|---|---|
+| Execution success rate | % of generated queries that run without a validation or database error |
+| Semantic accuracy (eval set) | % of queries on a held-out benchmark of question/expected-result pairs that return the correct result |
+| Clarification rate | % of questions the system asks to clarify rather than answering directly |
+| User-reported accuracy | % of results explicitly marked "correct" vs "incorrect" by users |
+| Regression rate | % of previously-passing eval questions that start failing after a prompt/model/schema change |
+
+The semantic accuracy eval set is run as part of CI for any change to prompts, schema context, or the underlying model, so regressions are caught before shipping rather than discovered from user reports.
+
+## Summary
+
+Accuracy improvements come less from a single clever prompt and more from a layered system: high-quality schema context, curated examples, validation and self-correction, sanity-checked execution, and a continuous feedback loop from real usage back into that context — combined with an eval suite that keeps changes honest over time.

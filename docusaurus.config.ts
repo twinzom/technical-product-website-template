@@ -29,9 +29,7 @@ const config: Config = {
     [
       'classic',
       {
-        docs: {
-          sidebarPath: './sidebars.ts',
-        },
+        docs: false,
         blog: false,
         theme: {
           customCss: './src/css/custom.css',
@@ -44,10 +42,37 @@ const config: Config = {
     [
       '@docusaurus/plugin-content-docs',
       {
-        id: 'docs-getting-started',
-        path: 'docs-getting-started',
-        routeBasePath: 'docs-getting-started',
-        sidebarPath: './sidebarsGettingStarted.ts',
+        id: 'product-overview',
+        path: 'docs-product-overview',
+        routeBasePath: 'product-overview',
+        sidebarPath: './sidebarsProductOverview.ts',
+      },
+    ],
+    [
+      '@docusaurus/plugin-content-docs',
+      {
+        id: 'architecture-design',
+        path: 'docs-architecture-design',
+        routeBasePath: 'architecture-design',
+        sidebarPath: './sidebarsArchitectureDesign.ts',
+      },
+    ],
+    [
+      '@docusaurus/plugin-content-docs',
+      {
+        id: 'market-deployment',
+        path: 'docs-market-deployment',
+        routeBasePath: 'market-deployment',
+        sidebarPath: './sidebarsMarketDeployment.ts',
+      },
+    ],
+    [
+      '@docusaurus/plugin-content-docs',
+      {
+        id: 'community-resources',
+        path: 'docs-community-resources',
+        routeBasePath: 'community-resources',
+        sidebarPath: './sidebarsCommunityResources.ts',
       },
     ],
   ],
@@ -66,16 +91,31 @@ const config: Config = {
       items: [
         {
           type: 'docSidebar',
-          sidebarId: 'gettingStartedSidebar',
-          docsPluginId: 'docs-getting-started',
+          sidebarId: 'productOverviewSidebar',
+          docsPluginId: 'product-overview',
           position: 'left',
-          label: 'Getting Started',
+          label: 'Product Overview',
         },
         {
           type: 'docSidebar',
-          sidebarId: 'docsSidebar',
+          sidebarId: 'architectureDesignSidebar',
+          docsPluginId: 'architecture-design',
           position: 'left',
-          label: 'Design Docs',
+          label: 'Architecture Design',
+        },
+        {
+          type: 'docSidebar',
+          sidebarId: 'marketDeploymentSidebar',
+          docsPluginId: 'market-deployment',
+          position: 'left',
+          label: 'Market Deployment & Operations',
+        },
+        {
+          type: 'docSidebar',
+          sidebarId: 'communityResourcesSidebar',
+          docsPluginId: 'community-resources',
+          position: 'left',
+          label: 'Community & Resources',
         },
         {
           href: 'https://github.com/twinzom/technical-product-website-template',
@@ -88,26 +128,39 @@ const config: Config = {
       style: 'dark',
       links: [
         {
-          title: 'Docs',
+          title: 'Product Overview',
           items: [
             {
-              label: 'Introduction',
-              to: '/docs/intro',
+              label: 'Product Overview',
+              to: '/product-overview',
             },
           ],
         },
         {
-          title: 'Getting Started',
+          title: 'Architecture Design',
           items: [
             {
-              label: 'Getting Started',
-              to: '/docs-getting-started/intro',
+              label: 'Architecture Design',
+              to: '/architecture-design',
             },
           ],
         },
         {
-          title: 'More',
+          title: 'Market Deployment & Operations',
           items: [
+            {
+              label: 'Market Deployment & Operations',
+              to: '/market-deployment',
+            },
+          ],
+        },
+        {
+          title: 'Community & Resources',
+          items: [
+            {
+              label: 'Community & Resources',
+              to: '/community-resources',
+            },
             {
               label: 'GitHub',
               href: 'https://github.com/twinzom/technical-product-website-template',
