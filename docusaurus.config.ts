@@ -3,8 +3,8 @@ import type {Config} from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
 
 const config: Config = {
-  title: 'My Site',
-  tagline: 'Dinosaurs are cool',
+  title: 'Wealth Intelligence',
+  tagline: 'The future of Wealth Management powered by the IWPB Wealth AI Platform',
   favicon: 'img/favicon.ico',
 
   future: {
@@ -83,10 +83,10 @@ const config: Config = {
       respectPrefersColorScheme: true,
     },
     navbar: {
-      title: 'My Site',
+      title: 'Wealth Intelligence',
       logo: {
-        alt: 'My Site Logo',
-        src: 'img/logo.svg',
+        alt: 'Wealth Intelligence Logo',
+        src: 'img/wealth-intelligence-icon.png',
       },
       items: [
         {
@@ -168,7 +168,7 @@ const config: Config = {
           ],
         },
       ],
-      copyright: `Copyright © ${new Date().getFullYear()} My Project, Inc. Built with Docusaurus.`,
+      copyright: `Copyright © ${new Date().getFullYear()} HSBC Wealth Solutions Technology. Built with Docusaurus.`,
     },
     prism: {
       theme: prismThemes.github,

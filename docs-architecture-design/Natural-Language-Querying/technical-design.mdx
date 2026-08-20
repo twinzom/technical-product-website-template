@@ -4,97 +4,79 @@ sidebar_position: 2
 
 # Technical Design
 
-This document describes the technical architecture of our NL2SQL feature — the components involved, how a request flows through the system, and the key design decisions behind them.
+This document describes the technical architecture of Data View, our NL2SQL engine — the stages a query passes through, and the key design decisions behind them.
 
-## Architecture Overview
-
-```
-                ┌──────────────────┐
- User question ─►  Query Preprocessor │
-                └─────────┬─────────┘
-                          ▼
-                ┌──────────────────┐      ┌────────────────────┐
-                │  Schema / Context ├─────►│  Schema & Metadata  │
-                │      Retriever    │      │  Store (tables,     │
-                └─────────┬─────────┘      │  columns, glossary) │
-                          ▼                └────────────────────┘
-                ┌──────────────────┐
-                │   LLM SQL         │
-                │   Generator       │
-                └─────────┬─────────┘
-                          ▼
-                ┌──────────────────┐
-                │  SQL Validator &  │
-                │  Guardrails       │
-                └─────────┬─────────┘
-                          ▼
-                ┌──────────────────┐      ┌────────────────────┐
-                │  Query Executor   ├─────►│      Database       │
-                └─────────┬─────────┘      └────────────────────┘
-                          ▼
-                ┌──────────────────┐
-                │  Result Formatter │
-                │  (table/chart/NL) │
-                └──────────────────┘
-```
-
-## Components
-
-### 1. Query Preprocessor
-
-Normalizes the incoming question: resolves conversational context (e.g. "now filter by region" refers to the previous query), expands abbreviations, and strips anything irrelevant to query generation. For multi-turn sessions, this stage also merges relevant history into a single self-contained question before it goes further down the pipeline.
-
-### 2. Schema & Context Retriever
-
-Rather than passing the entire database schema to the LLM (which is costly and adds noise), this component retrieves only the tables, columns, and business-glossary terms relevant to the question, using a combination of keyword matching and embedding-based similarity search over a maintained schema/metadata store. This store includes:
-
-- Table and column names with descriptions
-- Known joins and foreign-key relationships
-- Business definitions (e.g. what "active user" or "net revenue" means)
-- Example question → query pairs used as few-shot context
-
-### 3. LLM SQL Generator
-
-The retrieved schema context and the user's question are assembled into a prompt sent to an LLM, which generates the candidate SQL query. Key design choices:
-
-- **Constrained generation** — the model is instructed to only reference tables/columns present in the retrieved context, reducing hallucinated identifiers.
-- **Dialect-aware prompting** — the prompt specifies our database's SQL dialect and any query conventions (e.g. required date-range filters, soft-delete handling).
-- **Read-only by construction** — the generator is only ever asked to produce `SELECT` statements; write operations are out of scope for this feature entirely.
-
-### 4. SQL Validator & Guardrails
-
-Before execution, every generated query passes through automated checks:
-
-- **Syntax validation** — the query is parsed to confirm it's valid SQL for our dialect.
-- **Semantic validation** — referenced tables/columns are checked against the real schema.
-- **Policy guardrails** — enforced row-level security, column masking for sensitive fields, mandatory `LIMIT` clauses, and a strict allow-list of `SELECT`-only statements (no `INSERT`/`UPDATE`/`DELETE`/`DROP`/DDL).
-- **Cost/complexity checks** — queries are estimated (e.g. via `EXPLAIN`) and rejected or flagged if they would scan an unreasonable amount of data.
-
-Queries that fail validation are either automatically retried with corrective feedback appended to the prompt, or surfaced to the user as a clarification request rather than executed.
-
-### 5. Query Executor
-
-Executes the validated query against a read replica (never the primary transactional database), with a query timeout and result row cap to protect database performance.
-
-### 6. Result Formatter
-
-Converts the raw result set into the appropriate output — a table, a chart, or a natural-language summary generated from the result data — depending on the shape of the data and how the question was asked.
-
-## Data Flow Summary
-
-1. User submits a question (optionally as part of an ongoing conversation).
-2. The preprocessor resolves it into a standalone question.
-3. Relevant schema/context is retrieved.
-4. The LLM generates a candidate SQL query.
-5. The query is validated against syntax, schema, and security guardrails.
-6. The query executes against a read replica with enforced limits.
-7. Results are formatted and returned to the user, along with the generated SQL for transparency.
+Data View is exposed as an **MCP tool**, not a standalone chat UI: an AI Agent calls the tool with a natural-language query, and Data View is responsible for turning that query into SQL, running it, and returning a result — along with an explanation of why that SQL answers the question.
 
 ## Key Design Principles
 
-- **Read-only, always.** The feature never writes to the database — this eliminates an entire class of risk by design rather than relying solely on runtime checks.
-- **Least-privilege execution.** Queries run under a database role scoped to only the tables/columns the requesting user is permitted to see.
-- **Transparency by default.** The generated SQL is always shown alongside the answer so users (and reviewers) can verify what was actually run.
-- **Fail closed.** If validation is inconclusive or context retrieval has low confidence, the system asks for clarification instead of guessing and executing a possibly-wrong query.
+- **Isolation by architecture, not just policy.** Data View never has a live connection to source systems — it only ever queries a replicated snapshot. This removes an entire class of production-safety risk by construction rather than relying solely on runtime checks.
+- **Schema designed for the LLM, not just the application.** Materialized views are denormalized and curated specifically to make SQL generation more accurate and token-efficient, independent of how the source systems are actually modeled.
+- **Transparency by default.** The LLM is required to explain its own reasoning for every generated query, not just produce the SQL.
+- **Grounded in verified examples.** Few-shot pairs come from a maintained question inventory rather than being generated ad hoc, so the model is steered toward patterns that are already known to be correct.
+
+## Architecture Overview
+
+![NL2SQL technical architecture: an AI Agent calls the MCP tool, which retrieves few-shot pairs from the question inventory and schema context from the Snapshot DB, assembles a prompt, and sends it to the LLM to generate SQL and an explanation; the query executes against the Snapshot DB and the result is returned to the AI Agent](/img/architecture-design/Natural-Language-Querying/nl2sql-technical-architecture.drawio.svg)
+
+## How a Query Flows Through Data View
+
+A natural-language query moves through five stages, from intake to executed SQL:
+
+### 1. MCP Tool (Query Intake)
+
+An AI Agent calls Data View's MCP tool with a natural-language query. Data View is surfaced as an MCP tool rather than a bespoke API or UI, which keeps it decoupled from any one chat surface — the same tool can be wired into multiple agents without re-implementing the pipeline behind it.
+
+### 2. Question Inventory & Similar-Example Retrieval
+
+We maintain a **question inventory**: a curated store of question → SQL pairs. Data View searches this inventory for the most similar past questions and extracts their question-SQL pairs. These are used as few-shot examples in the prompt — they're the single biggest lever for getting the LLM to reproduce query patterns (joins, aggregation logic, business definitions) that have already been solved and verified, rather than re-deriving them from the schema alone.
+
+### 3. Prompt Assembly
+
+The prompt sent to the LLM combines three things:
+
+- The user's (or agent's) original query
+- The few-shot question-SQL pairs extracted from the question inventory
+- The relevant schema — drawn from the Snapshot DB's materialized views, not the raw source schema
+
+### 4. LLM SQL Generation & Explanation
+
+The LLM generates the candidate SQL from the assembled prompt. Critically, the prompt also requires the LLM to **explain its reasoning** — why it wrote the query the way it did. This explanation is returned alongside the SQL so the requesting agent (and any human downstream of it) can verify the query actually answers the question, rather than trusting the SQL blindly.
+
+### 5. Query Executor
+
+The generated SQL is executed against the Snapshot DB — never against the source production systems — and the result set is retrieved and returned together with the SQL and its explanation.
+
+## The Snapshot DB: A Replicated, Denormalized Analytical Layer
+
+The Snapshot DB is not a live connection to source systems. It's a **replicated snapshot**, transformed into a set of pre-defined materialized views that the LLM queries against. New source integrations require building a dedicated **data connector** to bring that system's data into the replication pipeline.
+
+![Snapshot pipeline: the Data Connector reaches out to Source System(s) to retrieve data, then feeds it to Snapshot Replication, which writes it into a staging table inside the Snapshot DB; data then syncs from the staging table to materialized views, also inside the Snapshot DB](/img/architecture-design/Natural-Language-Querying/nl2sql-snapshot-pipeline.drawio.svg)
+
+### Why Replicate Instead of Querying Source Systems Directly
+
+**1. Blast radius & production safety**
+
+- *Preventing outages* — LLMs frequently generate inefficient SQL (unindexed full-table scans, implicit Cartesian products from bad joins, unbounded aggregations) that can lock tables or exhaust CPU/memory on a live OLTP database. Running against a snapshot means that risk never reaches production.
+- *Access control* — because Data View only ever talks to a secondary snapshot, a write/update/drop — whether from prompt injection or LLM hallucination — can never touch primary application data.
+
+**2. Schema optimization for LLMs**
+
+- *Denormalization* — production schemas are typically normalized (3NF) and require multi-table joins that confuse LLMs. Replication lets us flatten data into simplified, denormalized materialized views, which meaningfully improves SQL generation accuracy.
+- *Token efficiency* — irrelevant tables, internal metadata, and obscure legacy columns can be filtered out during replication, leaving a clean, minimal schema footprint for the LLM's context.
+
+**3. Query latency & analytical performance**
+
+- *Pre-computed aggregations* — materialized views can pre-calculate heavy analytical metrics (e.g. year-over-year growth, rolling averages), so the LLM only needs to write a simple `SELECT` instead of an expensive runtime calculation.
+- *Engine alignment* — source databases (e.g. PostgreSQL, MySQL) are row-oriented and built for transactional speed; the replicated environment is free to use a columnar analytical engine (e.g. DuckDB, ClickHouse, Snowflake) better suited to NL2SQL-style analytical queries.
+
+### View Design: Segregated vs. Combined
+
+Materialized views can be scoped narrowly or broadly, and this is a deliberate design choice per dataset rather than a fixed rule:
+
+- **Segregated** — datasets can be kept in their own set of views (e.g. funds data and stock data live separately today), which keeps each view's schema small and focused.
+- **Combined** — where it's useful, views can also be designed to join across datasets, giving the LLM a single flattened view that spans what would otherwise be separate domains.
+
+Which approach to use is purely a function of how the views are designed — the replication architecture supports either.
 
 See [Improving Accuracy](./improving-accuracy) for how we measure and improve the correctness of generated queries over time.

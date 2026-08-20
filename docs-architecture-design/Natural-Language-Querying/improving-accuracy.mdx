@@ -35,7 +35,7 @@ When a question is ambiguous (e.g. no time range specified where one materially 
 
 ### 4. Self-Correction Loop
 
-If the SQL validator (see [Technical Design](./technical-design)) detects an issue — invalid column reference, a join that would produce a cartesian product, a syntax error — the error is fed back into the prompt and the model is given a bounded number of retries to correct it before falling back to a clarification request.
+If executing the generated SQL against the Snapshot DB (see [Technical Design](./technical-design)) fails — an invalid column reference, a syntax error — that error is fed back into the prompt and the model is given a bounded number of retries to correct it before falling back to a clarification request.
 
 ### 5. Execution-Based Sanity Checks
 
@@ -51,7 +51,7 @@ We track accuracy continuously rather than relying only on anecdotal reports:
 
 | Metric | What it measures |
 |---|---|
-| Execution success rate | % of generated queries that run without a validation or database error |
+| Execution success rate | % of generated queries that run against the Snapshot DB without error |
 | Semantic accuracy (eval set) | % of queries on a held-out benchmark of question/expected-result pairs that return the correct result |
 | Clarification rate | % of questions the system asks to clarify rather than answering directly |
 | User-reported accuracy | % of results explicitly marked "correct" vs "incorrect" by users |

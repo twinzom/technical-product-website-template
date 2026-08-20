@@ -1,57 +1,153 @@
 import type {ReactNode} from 'react';
-import clsx from 'clsx';
 import Heading from '@theme/Heading';
 import styles from './styles.module.css';
 
+type IconComponent = React.ComponentType<React.SVGProps<SVGSVGElement>>;
+
+const AgenticFrameworkIcon: IconComponent = (props) => (
+  <svg viewBox="0 0 24 24" fill="none" {...props}>
+    <circle cx="12" cy="4.5" r="2" stroke="currentColor" strokeWidth="1.5" />
+    <circle cx="5" cy="17" r="2" stroke="currentColor" strokeWidth="1.5" />
+    <circle cx="19" cy="17" r="2" stroke="currentColor" strokeWidth="1.5" />
+    <circle cx="12" cy="12" r="2" stroke="currentColor" strokeWidth="1.5" />
+    <path
+      d="M12 6.5V10M10.3 13.3 6.7 15.7M13.7 13.3l3.6 2.4"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+    />
+  </svg>
+);
+
+const BusinessUseCasesIcon: IconComponent = (props) => (
+  <svg viewBox="0 0 24 24" fill="none" {...props}>
+    <circle cx="12" cy="12" r="8" stroke="currentColor" strokeWidth="1.5" />
+    <circle cx="12" cy="12" r="4.5" stroke="currentColor" strokeWidth="1.5" />
+    <circle cx="12" cy="12" r="1.25" fill="currentColor" />
+  </svg>
+);
+
+const TechModernizationIcon: IconComponent = (props) => (
+  <svg viewBox="0 0 24 24" fill="none" {...props}>
+    <path
+      d="M12 4 4 8l8 4 8-4-8-4Z"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinejoin="round"
+    />
+    <path
+      d="M4 12l8 4 8-4M4 16l8 4 8-4"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </svg>
+);
+
+const InHouseEngineeringIcon: IconComponent = (props) => (
+  <svg viewBox="0 0 24 24" fill="none" {...props}>
+    <path
+      d="M12 3.5 5 6.3v5.4c0 4.2 3 6.9 7 8.8 4-1.9 7-4.6 7-8.8V6.3l-7-2.8Z"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinejoin="round"
+    />
+    <path
+      d="m9 12 2 2 4-4.2"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </svg>
+);
+
+const StrategicCollaborationIcon: IconComponent = (props) => (
+  <svg viewBox="0 0 24 24" fill="none" {...props}>
+    <circle cx="7" cy="8" r="2.75" stroke="currentColor" strokeWidth="1.5" />
+    <circle cx="17" cy="8" r="2.75" stroke="currentColor" strokeWidth="1.5" />
+    <path
+      d="M2.5 19c.8-2.9 2.8-4.5 4.5-4.5s3.7 1.6 4.5 4.5M12.5 19c.8-2.9 2.8-4.5 4.5-4.5s3.7 1.6 4.5 4.5"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+    />
+  </svg>
+);
+
 type FeatureItem = {
   title: string;
-  Svg: React.ComponentType<React.ComponentProps<'svg'>>;
+  Icon: IconComponent;
   description: ReactNode;
 };
 
 const FeatureList: FeatureItem[] = [
   {
-    title: 'Easy to Use',
-    Svg: require('@site/static/img/undraw_docusaurus_mountain.svg').default,
+    title: 'Agentic Framework',
+    Icon: AgenticFrameworkIcon,
     description: (
       <>
-        Docusaurus was designed from the ground up to be easily installed and
-        used to get your website up and running quickly.
+        Leverages autonomous, multi-agent AI design to orchestrate complex
+        workflows, enabling intelligent orchestration across diverse
+        business processes.
       </>
     ),
   },
   {
-    title: 'Focus on What Matters',
-    Svg: require('@site/static/img/undraw_docusaurus_tree.svg').default,
+    title: 'Targeted Wealth Business Use Cases',
+    Icon: BusinessUseCasesIcon,
     description: (
       <>
-        Docusaurus lets you focus on your docs, and we&apos;ll do the chores. Go
-        ahead and move your docs into the <code>docs</code> directory.
+        Powers domain-specific AI applications across Wealth and Private
+        Banking to elevate operational efficiency, empower advisors, and
+        enhance client experiences.
       </>
     ),
   },
   {
-    title: 'Powered by React',
-    Svg: require('@site/static/img/undraw_docusaurus_react.svg').default,
+    title: 'Continuous Tech Modernization',
+    Icon: TechModernizationIcon,
     description: (
       <>
-        Extend or customize your website layout by reusing React. Docusaurus can
-        be extended while reusing the same header and footer.
+        Designed with a modular architecture that seamlessly integrates
+        state-of-the-art AI advancements to maintain a competitive
+        technological edge.
+      </>
+    ),
+  },
+  {
+    title: 'In-House Engineering',
+    Icon: InHouseEngineeringIcon,
+    description: (
+      <>
+        Fully developed, owned, and maintained within Wealth Solutions
+        Technology, ensuring deep integration with core financial systems
+        and strict compliance standards.
+      </>
+    ),
+  },
+  {
+    title: 'Group AI Platform Collaboration',
+    Icon: StrategicCollaborationIcon,
+    description: (
+      <>
+        Developed in close partnership with the HSBC Group AI Team, ensuring
+        alignment with global enterprise AI standards, security protocols,
+        and ethical AI governance.
       </>
     ),
   },
 ];
 
-function Feature({title, Svg, description}: FeatureItem) {
+function Feature({title, Icon, description}: FeatureItem) {
   return (
-    <div className={clsx('col col--4')}>
-      <div className="text--center">
-        <Svg className={styles.featureSvg} role="img" />
+    <div className={styles.featureCard}>
+      <div className={styles.featureIconWrap}>
+        <Icon className={styles.featureIcon} />
       </div>
-      <div className="text--center padding-horiz--md">
-        <Heading as="h3">{title}</Heading>
-        <p>{description}</p>
-      </div>
+      <Heading as="h3">{title}</Heading>
+      <p>{description}</p>
     </div>
   );
 }
@@ -60,7 +156,10 @@ export default function HomepageFeatures(): ReactNode {
   return (
     <section className={styles.features}>
       <div className="container">
-        <div className="row">
+        <div className={styles.sectionIntro}>
+          <Heading as="h2">Key Architecture &amp; Capabilities</Heading>
+        </div>
+        <div className={styles.featureGrid}>
           {FeatureList.map((props, idx) => (
             <Feature key={idx} {...props} />
           ))}
