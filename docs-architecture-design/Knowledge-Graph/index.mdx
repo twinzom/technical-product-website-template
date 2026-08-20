@@ -1,0 +1,36 @@
+---
+sidebar_position: 3
+---
+
+# Knowledge Graph
+
+The Knowledge Graph is the entity-relationship store behind GraphRAG Knowledge Reasoning — it's what lets Wealth Intelligence connect clients, products, market signals, and documents into a single reasoning surface instead of treating each as an isolated record.
+
+## What It Stores
+
+The graph is built from nodes and typed edges, for example:
+
+| Entity Types | Relationship Examples |
+|---|---|
+| Clients, advisors, households | *client* — holds — *product* |
+| Financial products & instruments | *product* — issued by — *institution* |
+| Companies, market events | *event* — impacts — *instrument* |
+| Documents, research notes | *document* — mentions — *entity* |
+
+Nodes and edges are populated continuously from two sources: entity/relationship extraction run by [Unstructured Data Processing](./Unstructured-Data-Processing) over documents, and structured feeds from existing wealth platform data.
+
+## Why a Graph, Not Just a Vector Index
+
+Vector similarity search alone finds content that reads as *relevant* to a question, but it doesn't capture explicit, multi-hop relationships between entities. The Knowledge Graph fills that gap:
+
+- **Multi-hop reasoning** — answering "which clients are exposed to a company through funds they hold" requires traversing client → fund → holding → company, a chain a similarity search over document chunks won't reliably reconstruct.
+- **Explainability** — because a traversal path is a sequence of concrete edges, the reasoning behind an answer can be shown as a path through the graph, not just a set of retrieved passages.
+- **Complementary retrieval** — GraphRAG combines graph traversal with vector search over the same underlying content, so structured relationships and unstructured context reinforce each other rather than one replacing the other.
+
+## Keeping the Graph Current
+
+The graph is not a static snapshot. As new documents are processed and structured data changes, extraction and ingestion continuously add and update nodes and edges, so the graph reflects the current state of clients, holdings, and market conditions rather than a point-in-time export.
+
+## Where It Fits
+
+Agents reach the Knowledge Graph through the GraphRAG block described in the [Product Overview](/product-overview)'s "How It Works" section, alongside the vector database populated by [Unstructured Data Processing](./Unstructured-Data-Processing). Every answer that relies on graph traversal is still subject to the platform's [Groundedness Check](./Groundedness-Check) before it reaches the user.

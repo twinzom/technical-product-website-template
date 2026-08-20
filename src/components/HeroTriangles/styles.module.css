@@ -1,0 +1,59 @@
+.mesh {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  pointer-events: none;
+}
+
+.triangleFoldX,
+.triangleFoldY {
+  fill: #fff;
+  fill-opacity: var(--opacity, 0.08);
+  stroke: rgba(255, 255, 255, 0.08);
+  stroke-width: 1;
+  transform-box: fill-box;
+  transform-origin: var(--origin, 50% 50%);
+  animation-name: foldX;
+  animation-duration: var(--duration, 8s);
+  animation-delay: var(--delay, 0s);
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  will-change: transform, fill-opacity;
+}
+
+.triangleFoldY {
+  animation-name: foldY;
+}
+
+@keyframes foldX {
+  0%,
+  100% {
+    transform: scaleX(1);
+    fill-opacity: var(--opacity, 0.08);
+  }
+  50% {
+    transform: scaleX(0.06);
+    fill-opacity: calc(var(--opacity, 0.08) * 2.4);
+  }
+}
+
+@keyframes foldY {
+  0%,
+  100% {
+    transform: scaleY(1);
+    fill-opacity: var(--opacity, 0.08);
+  }
+  50% {
+    transform: scaleY(0.06);
+    fill-opacity: calc(var(--opacity, 0.08) * 2.4);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .triangleFoldX,
+  .triangleFoldY {
+    animation: none;
+  }
+}

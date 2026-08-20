@@ -1,0 +1,33 @@
+---
+sidebar_position: 6
+---
+
+# Auto Evaluation Framework
+
+The Auto Evaluation Framework is the offline evaluation harness that scores Wealth Intelligence's agents and skills against curated benchmark sets, running automatically as part of CI rather than relying on manual spot-checks or waiting for user reports.
+
+## Why Automated Evaluation
+
+Manual review doesn't scale to the pace or surface area of a multi-agent platform: every prompt change, skill update, model swap, or piece of new schema/graph context is a potential regression, and regressions in LLM-generated output are frequently silent — a response can look fluent and confident while being wrong, unsupported, or non-compliant. Running evaluation automatically on every relevant change is what makes it possible to catch these before they reach production instead of after.
+
+## What Gets Evaluated
+
+Each skill and agent workflow has an associated benchmark set of question/expected-outcome pairs, scored across several dimensions:
+
+| Dimension | What it measures |
+|---|---|
+| Task accuracy | Whether the agent's output correctly answers the benchmark question |
+| Groundedness | Whether claims in the output are supported by retrieved evidence (the same check the [Groundedness Check](./Groundedness-Check) applies at runtime, run here as an offline score) |
+| Safety & compliance | Whether the output avoids disallowed content, unsuitable recommendations, or policy violations |
+| Regression | Whether previously-passing benchmark cases still pass after the change |
+
+## How It Runs
+
+1. **Benchmark curation** — question/expected-outcome pairs are maintained per skill, sourced from known-correct cases and from real usage flagged through human-in-the-loop review.
+2. **CI trigger** — the relevant benchmark suite runs automatically against any change touching a skill's prompt, tool wiring, model, or supporting context (schema, graph structure, few-shot examples).
+3. **LLM-as-a-Judge scoring** — outputs are scored by an LLM-as-a-Judge process against the expected outcome and the dimensions above, rather than exact-match string comparison, since correct answers can be phrased many ways.
+4. **Gating** — a change that drops benchmark scores below the configured threshold, or introduces a regression on a previously-passing case, blocks the change from shipping until addressed.
+
+## Closing the Loop
+
+Benchmark sets aren't fixed. Cases flagged as incorrect through user feedback or the runtime [Groundedness Check](./Groundedness-Check) are reviewed and, once confirmed, folded back into the relevant skill's benchmark set — so evaluation coverage grows from real usage over time rather than only from cases anticipated up front.

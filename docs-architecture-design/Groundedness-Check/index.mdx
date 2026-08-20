@@ -1,0 +1,31 @@
+---
+sidebar_position: 5
+---
+
+# Groundedness Check
+
+The Groundedness Check is the runtime guardrail every Wealth Intelligence response passes through before it reaches the user — the last step in the [Product Overview](/product-overview)'s "How It Works" flow. Its job is to verify that what an agent is about to say is actually supported by the evidence it retrieved, not just plausible-sounding.
+
+## What It Checks
+
+For each generated response, the check compares the claims made against the evidence the agent actually retrieved during that turn — results from the [Knowledge Graph](./Knowledge-Graph), NL2SQL query results, and MCP tool calls — and flags anything that doesn't trace back to that evidence:
+
+- **Unsupported claims** — statements not backed by any retrieved source, including subtly overreaching generalizations from a narrower fact.
+- **Contradicted claims** — statements that conflict with retrieved evidence rather than simply lacking support for it.
+- **Missing attribution** — factual claims that are supported but not traceable to a specific source, which matters as much as correctness in a regulated wealth context.
+
+## Why a Separate Runtime Check
+
+Retrieval quality doesn't guarantee generation quality — an agent can retrieve the right evidence and still produce a response that drifts from it, drops a caveat, or extrapolates beyond what the sources actually say. The Groundedness Check catches that gap at the point closest to the user, independent of whatever went right or wrong upstream in retrieval or reasoning.
+
+## What Happens on a Failed Check
+
+A response that fails groundedness isn't simply blocked outright — the failure mode depends on severity:
+
+- Minor unsupported detail: the response is revised to remove or qualify the unsupported claim before returning.
+- Material unsupported or contradicted claim: the response is regenerated with the specific issue surfaced back to the agent, or the agent is prompted to retrieve more evidence.
+- Persistent failure: the user receives a response that clearly states what's known and what couldn't be verified, rather than a confident but ungrounded answer.
+
+## Relationship to the Auto Evaluation Framework
+
+Groundedness Check operates online, per response, in the live request path. The [Auto Evaluation Framework](./Auto-Evaluation-Framework) operates offline, scoring groundedness (among other dimensions) across a benchmark set as part of CI. The two are deliberately complementary: the Auto Evaluation Framework catches regressions before a change ships, while the Groundedness Check catches issues that only surface on real, unpredictable user traffic.

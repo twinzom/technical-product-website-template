@@ -4,4 +4,29 @@ sidebar_position: 1
 
 # Product Overview
 
-Welcome to the Product Overview. Here you'll find what the product does, how it's put together, and step-by-step guides to help you get up and running.
+Wealth Intelligence is the AI-native engine at the core of HSBC Wealth Solutions — a multi-agent platform that automates complex financial workflows, surfaces market and client insights, and puts a governed, extensible reasoning layer on top of the firm's data. It reasons over structured and unstructured wealth data alike, while keeping every response auditable and compliant.
+
+## Key Features
+
+| Feature | Description |
+|---|---|
+| **LangGraph Multi-Agent Orchestration** | Powers stateful, collaborative agent workflows for complex financial journeys. |
+| **Modular Skills Architecture** | Decouples specialist capabilities such as Equities Search, News Research, and Market Insights. |
+| **Persistent Multi-Layer Memory** | Maintains user, client, and session context for personalization and continuity. |
+| **LLM-as-a-Judge Guardrail & Evaluation** | Validates the quality, safety, compliance, and suitability of AI-generated responses and actions. |
+| **GraphRAG Knowledge Reasoning** | Connects entities, relationships, documents, products, clients, and market signals to support explainable financial insights. |
+| **NL2SQL Query RAG** | Converts natural language into precise SQL queries over PostgreSQL financial data. |
+| **MCP Tool & External Data Hub** | Connects agents to WKB tools, action tools, and data MCPs such as Morningstar and FactSet. |
+
+## How It Works
+
+![How Wealth Intelligence Works](/img/product-overview/wealth-intelligence-architecture.drawio.svg)
+
+- A user question reaches the LangGraph agents through the AI Application UI.
+- Modular skills enrich what the agents can do, while the memory block keeps user, client, and session context across the conversation.
+- To answer, agents call out over MCP to:
+  - the GraphRAG block for knowledge search (vector database and knowledge graph)
+  - the NL2SQL block for structured financial queries (materialized view database)
+  - legacy Wealth platform and external MCP tools (trading, portfolio management, financial planning, LSEG, FactSet, and similar) for data and actions
+- GraphRAG and NL2SQL are kept current from the platform's existing unstructured and structured data sources.
+- Every response passes through the Guardrail for a groundedness and trust check before it reaches the user.

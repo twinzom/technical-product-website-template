@@ -1,0 +1,28 @@
+---
+sidebar_position: 2
+---
+
+# Unstructured Data Processing
+
+This section covers how Wealth Intelligence turns raw, unstructured wealth content — research reports, regulatory filings, market commentary, advisor notes, internal memos — into a form the [Knowledge Graph](./Knowledge-Graph) and NL2SQL layers can actually reason over.
+
+## Why It's Needed
+
+LLMs can't reliably query a folder of PDFs directly at scale or with consistent accuracy. Before any document can support GraphRAG retrieval or graph-based reasoning, it has to be broken down, understood, and indexed in a structured way — otherwise every question would require re-reading and re-interpreting the same raw text from scratch.
+
+## Pipeline Stages
+
+Unstructured content moves through four stages before it's usable downstream:
+
+1. **Ingestion** — documents are pulled from source systems (document stores, research feeds, filing repositories) and normalized into plain text, preserving source metadata (origin, author, publication date, classification).
+2. **Chunking** — normalized text is split into semantically coherent segments sized for embedding and retrieval, rather than arbitrary fixed-length blocks, so a single chunk stays topically self-contained.
+3. **Entity & Relationship Extraction** — an LLM-based extraction step identifies entities (companies, instruments, people, events) and the relationships between them, which are written into the Knowledge Graph.
+4. **Embedding & Indexing** — chunks are embedded and written into the vector database that backs GraphRAG's similarity search, alongside the graph relationships extracted in the previous stage.
+
+## Provenance & Auditability
+
+Every extracted chunk and entity retains a link back to its source document, including page/section reference where available. This is what lets GraphRAG responses cite a specific document rather than presenting a synthesized claim with no traceable origin — a requirement for anything used in a regulated wealth context.
+
+## Where It Fits
+
+Unstructured Data Processing sits upstream of both the [Knowledge Graph](./Knowledge-Graph) and the vector index that GraphRAG queries at answer time. As new documents arrive, this pipeline is what keeps both current — see "How It Works" in the [Product Overview](/product-overview) for how these pieces connect end to end.

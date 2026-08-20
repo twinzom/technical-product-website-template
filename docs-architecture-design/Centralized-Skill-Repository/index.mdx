@@ -1,0 +1,28 @@
+---
+sidebar_position: 7
+---
+
+# Centralized Skill Repository
+
+The Centralized Skill Repository is the registry behind Wealth Intelligence's Modular Skills Architecture — the single place where specialist capabilities such as Equities Search, News Research, and Market Insights are defined, versioned, and made discoverable to the LangGraph agents that use them.
+
+## Why Centralize Skills
+
+Without a shared registry, individual agent workflows tend to reimplement overlapping capabilities independently, each with its own interface, its own quality bar, and its own undocumented assumptions — making capabilities harder to reuse, harder to audit, and inconsistent from one workflow to the next. A centralized repository gives every skill a single definition, owner, and contract that any agent can rely on.
+
+## What a Skill Definition Includes
+
+Each entry in the repository packages everything an agent needs to discover and invoke a skill safely:
+
+- **Interface contract** — inputs, outputs, and invocation pattern, so agents can compose skills without knowing their internal implementation.
+- **Version & change history** — skills are versioned explicitly, so an agent workflow can pin to a known-good version and upgrades are deliberate rather than silent.
+- **Permissions & data scope** — what data sources and downstream systems (MCP tools, WKB tools, external data providers) the skill is allowed to touch, enforced consistently regardless of which agent invokes it.
+- **Evaluation coverage** — a link to the skill's benchmark set in the [Auto Evaluation Framework](./Auto-Evaluation-Framework), so quality and regression status are visible alongside the skill definition itself.
+
+## Discovery & Composition
+
+At runtime, LangGraph agents query the repository to discover which skills are available and applicable to the current step of a workflow, rather than having skill availability hardcoded into each agent's logic. This is what lets new skills become available to existing agents without changing the agents themselves, and lets the same skill be reused across multiple workflows without duplication.
+
+## Governance
+
+Because every skill a Wealth Intelligence agent can invoke passes through the same registry, the repository also serves as the single point for reviewing what capabilities exist, what data they can access, and who owns them — a requirement for auditability in a regulated wealth management context, and a natural complement to the [Groundedness Check](./Groundedness-Check) and [Auto Evaluation Framework](./Auto-Evaluation-Framework) that govern skill *output* quality.
