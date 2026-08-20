@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="822px" height="292px" viewBox="-1 -1 822 292" content="&lt;mxfile&gt;&lt;diagram id=&quot;0&quot; name=&quot;F&quot;&gt;zddPb5swFADwT4O0XSpjhz+9Lu16SStN0aT1aOAB1gymxjTJPv1MMKkppIpSluwQyX7PNvinhwkOWRbbB0mr/FEkwB1y75ClFEJ1rWK7BM4djFjikDsHY6R/Dv5+JOvus6iiEkp1yoSmBtnNeaW8gS748xCs1Y6boBRNmUA7zXXIt03OFKwrGrfZjb59HctVwU06ZZwvBRdyP5ckFMI01vFaSfEbrIwfhxClOmNuAqSC7dG97ENmIw8gClByp4eYCYtuq2hnBrumv2GJyk2sH5MDy3Kzqm9itO762WHlNzjdMHbTjlBmrISR5NMKr3+sdOzeys+F6kGYLKZQQxwR358HleATVMN/pJpEI9E7qmhE63kp0xT8eLI+k+A2QmgeSv+aBcp5MbJcrR4d7Otduu0Ov2RQgqQKaj1KV+3XWYnB1fUaTBHf+gGhc1WrNyTGU8R4gtib4wxwR8IvDdSKiXJEaUHBlqlfVvtZt9EN9tpuqW+hzaG+YyW7NSHJ4GMsfV3RyBjeH/iKygzU++NrTCuBU8Veh1f5lBMeOXWHpNYyK/0XVPaZbmN1p9IloMgISkLdcHWKERoYBQMjd2gUnG/Un9DXK6bFyIiW9WbiD8zVjI7VUf8oXkLJGylVUhTVh5WUilKt2Z824SJb7YYQC84dPH3W0/hshOdVMy+yS6D50+fUOWJdbfWlNhTzA1vMPVvs8Iq/1MOou29fKvvc4EPmLw==&lt;/diagram&gt;&lt;/mxfile&gt;">
+  <defs/>
+  <g>
+    <!-- Edge: User -> NL2SQL Engine (top, question) -->
+    <path d="M 180 125 L 313.5 125" fill="none" stroke="#000000" stroke-width="1" stroke-miterlimit="10" pointer-events="stroke"/>
+    <path d="M 318.75 125 L 311.75 128.5 L 313.5 125 L 311.75 121.5 Z" fill="#000000" stroke="#000000" stroke-width="1" stroke-miterlimit="10" pointer-events="all"/>
+    <rect x="185" y="102" width="130" height="16" fill="#ffffff" fill-opacity="0.85" stroke="none"/>
+    <text x="250" y="114" font-family="Helvetica" font-size="11px" text-anchor="middle" fill="#000000">question (natural language)</text>
+
+    <!-- Edge: NL2SQL Engine -> Database (top, SQL query) -->
+    <path d="M 500 125 L 633.5 125" fill="none" stroke="#000000" stroke-width="1" stroke-miterlimit="10" pointer-events="stroke"/>
+    <path d="M 638.75 125 L 631.75 128.5 L 633.5 125 L 631.75 121.5 Z" fill="#000000" stroke="#000000" stroke-width="1" stroke-miterlimit="10" pointer-events="all"/>
+    <rect x="535" y="102" width="70" height="16" fill="#ffffff" fill-opacity="0.85" stroke="none"/>
+    <text x="570" y="114" font-family="Helvetica" font-size="11px" text-anchor="middle" fill="#000000">SQL query</text>
+
+    <!-- Edge: Database -> NL2SQL Engine (bottom, result) -->
+    <path d="M 640 155 L 506.5 155" fill="none" stroke="#000000" stroke-width="1" stroke-miterlimit="10" pointer-events="stroke"/>
+    <path d="M 501.25 155 L 508.25 151.5 L 506.5 155 L 508.25 158.5 Z" fill="#000000" stroke="#000000" stroke-width="1" stroke-miterlimit="10" pointer-events="all"/>
+    <rect x="540" y="158" width="50" height="16" fill="#ffffff" fill-opacity="0.85" stroke="none"/>
+    <text x="565" y="170" font-family="Helvetica" font-size="11px" text-anchor="middle" fill="#000000">result</text>
+
+    <!-- Edge: NL2SQL Engine -> User (bottom, formatted answer) -->
+    <path d="M 320 155 L 186.5 155" fill="none" stroke="#000000" stroke-width="1" stroke-miterlimit="10" pointer-events="stroke"/>
+    <path d="M 181.25 155 L 188.25 151.5 L 186.5 155 L 188.25 158.5 Z" fill="#000000" stroke="#000000" stroke-width="1" stroke-miterlimit="10" pointer-events="all"/>
+    <rect x="195" y="158" width="110" height="16" fill="#ffffff" fill-opacity="0.85" stroke="none"/>
+    <text x="250" y="170" font-family="Helvetica" font-size="11px" text-anchor="middle" fill="#000000">formatted answer</text>
+
+    <!-- Edge: NL2SQL Engine -> LLM (down, prompt) -->
+    <path d="M 380 170 L 380 202.5" fill="none" stroke="#000000" stroke-width="1" stroke-miterlimit="10" pointer-events="stroke"/>
+    <path d="M 380 208.76 L 376.5 201.76 L 380 203.5 L 383.5 201.76 Z" fill="#000000" stroke="#000000" stroke-width="1" stroke-miterlimit="10" pointer-events="all"/>
+    <rect x="270" y="182" width="106" height="16" fill="#ffffff" fill-opacity="0.85" stroke="none"/>
+    <text x="374" y="194" font-family="Helvetica" font-size="10px" text-anchor="end" fill="#000000">prompt (question + schema)</text>
+
+    <!-- Edge: LLM -> NL2SQL Engine (up, SQL) -->
+    <path d="M 441 210 L 441 177.5" fill="none" stroke="#000000" stroke-width="1" stroke-miterlimit="10" pointer-events="stroke"/>
+    <path d="M 441 171.24 L 444.5 178.24 L 441 176.5 L 437.5 178.24 Z" fill="#000000" stroke="#000000" stroke-width="1" stroke-miterlimit="10" pointer-events="all"/>
+    <rect x="447" y="186" width="30" height="16" fill="#ffffff" fill-opacity="0.85" stroke="none"/>
+    <text x="449" y="198" font-family="Helvetica" font-size="10px" text-anchor="start" fill="#000000">SQL</text>
+
+    <!-- Node: User -->
+    <rect x="40" y="110" width="140" height="60" rx="9" ry="9" fill="#dae8fc" stroke="#6c8ebf" pointer-events="all"/>
+    <text x="110" y="144" font-family="Helvetica" font-size="14px" text-anchor="middle" fill="#000000">User</text>
+
+    <!-- Node: NL2SQL Engine -->
+    <rect x="320" y="110" width="180" height="60" rx="9" ry="9" fill="#d5e8d4" stroke="#82b366" pointer-events="all"/>
+    <text x="410" y="144" font-family="Helvetica" font-size="14px" text-anchor="middle" fill="#000000">NL2SQL Engine</text>
+
+    <!-- Node: Database -->
+    <rect x="640" y="110" width="140" height="60" rx="9" ry="9" fill="#ffe6cc" stroke="#d79b00" pointer-events="all"/>
+    <text x="710" y="144" font-family="Helvetica" font-size="14px" text-anchor="middle" fill="#000000">Database</text>
+
+    <!-- Node: LLM -->
+    <rect x="350" y="210" width="120" height="50" rx="9" ry="9" fill="#e1d5e7" stroke="#9673a6" pointer-events="all"/>
+    <text x="410" y="230" font-family="Helvetica" font-size="13px" text-anchor="middle" fill="#000000">LLM</text>
+    <text x="410" y="246" font-family="Helvetica" font-size="10px" text-anchor="middle" fill="#000000">(generates SQL)</text>
+  </g>
+</svg>
