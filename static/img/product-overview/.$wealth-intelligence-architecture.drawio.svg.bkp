@@ -1,0 +1,184 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="1600" height="900" viewBox="0 0 1600 900" content="&lt;mxfile host=&quot;Electron&quot; modified=&quot;2026-08-20T00:00:00.000Z&quot; agent=&quot;claude-code&quot; version=&quot;24.7.17&quot; type=&quot;device&quot;&gt;&lt;diagram name=&quot;Page-1&quot; id=&quot;wi-architecture&quot;&gt;&lt;mxGraphModel dx=&quot;800&quot; dy=&quot;600&quot; grid=&quot;1&quot; gridSize=&quot;10&quot; guides=&quot;1&quot; tooltips=&quot;1&quot; connect=&quot;1&quot; arrows=&quot;1&quot; fold=&quot;1&quot; page=&quot;1&quot; pageScale=&quot;1&quot; pageWidth=&quot;1600&quot; pageHeight=&quot;900&quot; math=&quot;0&quot; shadow=&quot;0&quot;&gt;&lt;root&gt;&lt;mxCell id=&quot;0&quot;/&gt;&lt;mxCell id=&quot;1&quot; parent=&quot;0&quot;/&gt;&lt;mxCell id=&quot;ui&quot; value=&quot;AI Application UI
+(user asks a question)&quot; style=&quot;rounded=1;whiteSpace=wrap;html=1;fillColor=#DAE8FC;strokeColor=#6C8EBF;dashed=0;fontSize=12&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;&lt;mxGeometry x=&quot;40&quot; y=&quot;380&quot; width=&quot;180&quot; height=&quot;90&quot; as=&quot;geometry&quot;/&gt;&lt;/mxCell&gt;&lt;mxCell id=&quot;guardrail&quot; value=&quot;Guardrail
+Groundedness &amp;amp; trust check&quot; style=&quot;rounded=1;whiteSpace=wrap;html=1;fillColor=#F8CECC;strokeColor=#B85450;dashed=0;fontSize=12&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;&lt;mxGeometry x=&quot;40&quot; y=&quot;570&quot; width=&quot;180&quot; height=&quot;90&quot; as=&quot;geometry&quot;/&gt;&lt;/mxCell&gt;&lt;mxCell id=&quot;langgraph&quot; value=&quot;LangGraph Multi-Agent Orchestration&quot; style=&quot;rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF2CC;strokeColor=#D6B656;dashed=0;fontStyle=1;fontSize=13;verticalAlign=top;align=left;spacingLeft=6;spacingTop=6&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;&lt;mxGeometry x=&quot;300&quot; y=&quot;120&quot; width=&quot;460&quot; height=&quot;320&quot; as=&quot;geometry&quot;/&gt;&lt;/mxCell&gt;&lt;mxCell id=&quot;skills&quot; value=&quot;Modular Skills
+Equities Search  •  News Research  •  Market Insights&quot; style=&quot;rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#D6B656;dashed=0;fontSize=12&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;&lt;mxGeometry x=&quot;330&quot; y=&quot;165&quot; width=&quot;400&quot; height=&quot;95&quot; as=&quot;geometry&quot;/&gt;&lt;/mxCell&gt;&lt;mxCell id=&quot;agents&quot; value=&quot;Agents
+Planner Agent  •  Research Agent  •  Execution Agent&quot; style=&quot;rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#D6B656;dashed=0;fontSize=12&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;&lt;mxGeometry x=&quot;330&quot; y=&quot;285&quot; width=&quot;400&quot; height=&quot;135&quot; as=&quot;geometry&quot;/&gt;&lt;/mxCell&gt;&lt;mxCell id=&quot;memory&quot; value=&quot;Persistent Multi-Layer Memory
+User / client / session context&quot; style=&quot;rounded=1;whiteSpace=wrap;html=1;fillColor=#D5E8D4;strokeColor=#82B366;dashed=0;fontSize=12&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;&lt;mxGeometry x=&quot;300&quot; y=&quot;480&quot; width=&quot;460&quot; height=&quot;90&quot; as=&quot;geometry&quot;/&gt;&lt;/mxCell&gt;&lt;mxCell id=&quot;graphrag&quot; value=&quot;GraphRAG Knowledge Reasoning
+(Knowledge Base &amp;amp; Knowledge Graph)&quot; style=&quot;rounded=1;whiteSpace=wrap;html=1;fillColor=#E1D5E7;strokeColor=#9673A6;dashed=0;fontStyle=1;fontSize=13;verticalAlign=top;align=left;spacingLeft=6;spacingTop=6&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;&lt;mxGeometry x=&quot;820&quot; y=&quot;40&quot; width=&quot;440&quot; height=&quot;300&quot; as=&quot;geometry&quot;/&gt;&lt;/mxCell&gt;&lt;mxCell id=&quot;mcp_graphrag&quot; value=&quot;MCP Server&quot; style=&quot;rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#9673A6;dashed=0;fontSize=12&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;&lt;mxGeometry x=&quot;850&quot; y=&quot;110&quot; width=&quot;160&quot; height=&quot;70&quot; as=&quot;geometry&quot;/&gt;&lt;/mxCell&gt;&lt;mxCell id=&quot;vector_db&quot; value=&quot;Vector Database
+(unstructured data index)&quot; style=&quot;rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#9673A6;dashed=0;fontSize=12&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;&lt;mxGeometry x=&quot;1050&quot; y=&quot;90&quot; width=&quot;180&quot; height=&quot;70&quot; as=&quot;geometry&quot;/&gt;&lt;/mxCell&gt;&lt;mxCell id=&quot;knowledge_db&quot; value=&quot;Knowledge Database
+(data-to-data relationships)&quot; style=&quot;rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#9673A6;dashed=0;fontSize=12&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;&lt;mxGeometry x=&quot;1050&quot; y=&quot;190&quot; width=&quot;180&quot; height=&quot;70&quot; as=&quot;geometry&quot;/&gt;&lt;/mxCell&gt;&lt;mxCell id=&quot;nl2sql&quot; value=&quot;NL2SQL Query RAG
+(Data View)&quot; style=&quot;rounded=1;whiteSpace=wrap;html=1;fillColor=#FFE6CC;strokeColor=#D79B00;dashed=0;fontStyle=1;fontSize=13;verticalAlign=top;align=left;spacingLeft=6;spacingTop=6&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;&lt;mxGeometry x=&quot;820&quot; y=&quot;380&quot; width=&quot;440&quot; height=&quot;300&quot; as=&quot;geometry&quot;/&gt;&lt;/mxCell&gt;&lt;mxCell id=&quot;mcp_nl2sql&quot; value=&quot;MCP Server&quot; style=&quot;rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#D79B00;dashed=0;fontSize=12&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;&lt;mxGeometry x=&quot;850&quot; y=&quot;450&quot; width=&quot;160&quot; height=&quot;70&quot; as=&quot;geometry&quot;/&gt;&lt;/mxCell&gt;&lt;mxCell id=&quot;nl2sql_engine&quot; value=&quot;NL2SQL Engine&quot; style=&quot;rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#D79B00;dashed=0;fontSize=12&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;&lt;mxGeometry x=&quot;1050&quot; y=&quot;430&quot; width=&quot;180&quot; height=&quot;70&quot; as=&quot;geometry&quot;/&gt;&lt;/mxCell&gt;&lt;mxCell id=&quot;mv_db&quot; value=&quot;Database
+(materialized view snapshots)&quot; style=&quot;rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#D79B00;dashed=0;fontSize=12&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;&lt;mxGeometry x=&quot;1050&quot; y=&quot;530&quot; width=&quot;180&quot; height=&quot;70&quot; as=&quot;geometry&quot;/&gt;&lt;/mxCell&gt;&lt;mxCell id=&quot;legacy_group&quot; value=&quot;Legacy Wealth Platform
+MCP Tools&quot; style=&quot;rounded=1;whiteSpace=wrap;html=1;fillColor=#F5F5F5;strokeColor=#666666;dashed=1;fontStyle=1;fontSize=13;verticalAlign=top;align=left;spacingLeft=6;spacingTop=6&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;&lt;mxGeometry x=&quot;1340&quot; y=&quot;40&quot; width=&quot;220&quot; height=&quot;300&quot; as=&quot;geometry&quot;/&gt;&lt;/mxCell&gt;&lt;mxCell id=&quot;trading_mcp&quot; value=&quot;Trading Platform
+MCP&quot; style=&quot;rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#666666;dashed=1;fontSize=12&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;&lt;mxGeometry x=&quot;1360&quot; y=&quot;100&quot; width=&quot;180&quot; height=&quot;60&quot; as=&quot;geometry&quot;/&gt;&lt;/mxCell&gt;&lt;mxCell id=&quot;portfolio_mcp&quot; value=&quot;Portfolio Management
+MCP&quot; style=&quot;rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#666666;dashed=1;fontSize=12&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;&lt;mxGeometry x=&quot;1360&quot; y=&quot;170&quot; width=&quot;180&quot; height=&quot;60&quot; as=&quot;geometry&quot;/&gt;&lt;/mxCell&gt;&lt;mxCell id=&quot;planning_mcp&quot; value=&quot;Financial Planning
+MCP&quot; style=&quot;rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#666666;dashed=1;fontSize=12&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;&lt;mxGeometry x=&quot;1360&quot; y=&quot;240&quot; width=&quot;180&quot; height=&quot;60&quot; as=&quot;geometry&quot;/&gt;&lt;/mxCell&gt;&lt;mxCell id=&quot;external_group&quot; value=&quot;External MCP Servers
+(non-Wealth / vendor)&quot; style=&quot;rounded=1;whiteSpace=wrap;html=1;fillColor=#F5F5F5;strokeColor=#666666;dashed=1;fontStyle=1;fontSize=13;verticalAlign=top;align=left;spacingLeft=6;spacingTop=6&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;&lt;mxGeometry x=&quot;1340&quot; y=&quot;380&quot; width=&quot;220&quot; height=&quot;220&quot; as=&quot;geometry&quot;/&gt;&lt;/mxCell&gt;&lt;mxCell id=&quot;lseg_mcp&quot; value=&quot;LSEG MCP&quot; style=&quot;rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#666666;dashed=1;fontSize=12&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;&lt;mxGeometry x=&quot;1360&quot; y=&quot;440&quot; width=&quot;180&quot; height=&quot;55&quot; as=&quot;geometry&quot;/&gt;&lt;/mxCell&gt;&lt;mxCell id=&quot;factset_mcp&quot; value=&quot;FactSet MCP&quot; style=&quot;rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#666666;dashed=1;fontSize=12&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;&lt;mxGeometry x=&quot;1360&quot; y=&quot;505&quot; width=&quot;180&quot; height=&quot;55&quot; as=&quot;geometry&quot;/&gt;&lt;/mxCell&gt;&lt;mxCell id=&quot;unstructured_data&quot; value=&quot;Unstructured Data
+Articles, reports,
+webpages, files&quot; style=&quot;rounded=1;whiteSpace=wrap;html=1;fillColor=#F5F5F5;strokeColor=#666666;dashed=1;fontSize=12&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;&lt;mxGeometry x=&quot;820&quot; y=&quot;720&quot; width=&quot;210&quot; height=&quot;110&quot; as=&quot;geometry&quot;/&gt;&lt;/mxCell&gt;&lt;mxCell id=&quot;structured_data&quot; value=&quot;Structured Data
+Databases,
+interface files&quot; style=&quot;rounded=1;whiteSpace=wrap;html=1;fillColor=#F5F5F5;strokeColor=#666666;dashed=1;fontSize=12&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;&lt;mxGeometry x=&quot;1050&quot; y=&quot;720&quot; width=&quot;210&quot; height=&quot;110&quot; as=&quot;geometry&quot;/&gt;&lt;/mxCell&gt;&lt;mxCell id=&quot;edge0&quot; value=&quot;user question&quot; style=&quot;edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;&quot; edge=&quot;1&quot; parent=&quot;1&quot; source=&quot;ui&quot; target=&quot;agents&quot;&gt;&lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot;/&gt;&lt;/mxCell&gt;&lt;mxCell id=&quot;edge1&quot; value=&quot;response&quot; style=&quot;edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;&quot; edge=&quot;1&quot; parent=&quot;1&quot; source=&quot;agents&quot; target=&quot;guardrail&quot;&gt;&lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot;/&gt;&lt;/mxCell&gt;&lt;mxCell id=&quot;edge2&quot; value=&quot;validated answer&quot; style=&quot;edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;&quot; edge=&quot;1&quot; parent=&quot;1&quot; source=&quot;guardrail&quot; target=&quot;ui&quot;&gt;&lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot;/&gt;&lt;/mxCell&gt;&lt;mxCell id=&quot;edge3&quot; value=&quot;enrich capability&quot; style=&quot;edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;&quot; edge=&quot;1&quot; parent=&quot;1&quot; source=&quot;skills&quot; target=&quot;agents&quot;&gt;&lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot;/&gt;&lt;/mxCell&gt;&lt;mxCell id=&quot;edge4&quot; value=&quot;context&quot; style=&quot;edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;startArrow=block;startFill=1;&quot; edge=&quot;1&quot; parent=&quot;1&quot; source=&quot;agents&quot; target=&quot;memory&quot;&gt;&lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot;/&gt;&lt;/mxCell&gt;&lt;mxCell id=&quot;edge5&quot; value=&quot;tool call&quot; style=&quot;edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;&quot; edge=&quot;1&quot; parent=&quot;1&quot; source=&quot;agents&quot; target=&quot;mcp_graphrag&quot;&gt;&lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot;/&gt;&lt;/mxCell&gt;&lt;mxCell id=&quot;edge6&quot; value=&quot;search&quot; style=&quot;edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;&quot; edge=&quot;1&quot; parent=&quot;1&quot; source=&quot;mcp_graphrag&quot; target=&quot;vector_db&quot;&gt;&lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot;/&gt;&lt;/mxCell&gt;&lt;mxCell id=&quot;edge7&quot; value=&quot;search&quot; style=&quot;edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;&quot; edge=&quot;1&quot; parent=&quot;1&quot; source=&quot;mcp_graphrag&quot; target=&quot;knowledge_db&quot;&gt;&lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot;/&gt;&lt;/mxCell&gt;&lt;mxCell id=&quot;edge8&quot; value=&quot;tool call&quot; style=&quot;edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;&quot; edge=&quot;1&quot; parent=&quot;1&quot; source=&quot;agents&quot; target=&quot;mcp_nl2sql&quot;&gt;&lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot;/&gt;&lt;/mxCell&gt;&lt;mxCell id=&quot;edge9&quot; value=&quot;convert&quot; style=&quot;edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;&quot; edge=&quot;1&quot; parent=&quot;1&quot; source=&quot;mcp_nl2sql&quot; target=&quot;nl2sql_engine&quot;&gt;&lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot;/&gt;&lt;/mxCell&gt;&lt;mxCell id=&quot;edge10&quot; value=&quot;query&quot; style=&quot;edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;&quot; edge=&quot;1&quot; parent=&quot;1&quot; source=&quot;nl2sql_engine&quot; target=&quot;mv_db&quot;&gt;&lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot;/&gt;&lt;/mxCell&gt;&lt;mxCell id=&quot;edge11&quot; value=&quot;tool call&quot; style=&quot;edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;&quot; edge=&quot;1&quot; parent=&quot;1&quot; source=&quot;agents&quot; target=&quot;legacy_group&quot;&gt;&lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot;/&gt;&lt;/mxCell&gt;&lt;mxCell id=&quot;edge12&quot; value=&quot;tool call&quot; style=&quot;edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;&quot; edge=&quot;1&quot; parent=&quot;1&quot; source=&quot;agents&quot; target=&quot;external_group&quot;&gt;&lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot;/&gt;&lt;/mxCell&gt;&lt;mxCell id=&quot;edge13&quot; value=&quot;ingest&quot; style=&quot;edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;dashed=1;strokeColor=#666666;&quot; edge=&quot;1&quot; parent=&quot;1&quot; source=&quot;unstructured_data&quot; target=&quot;vector_db&quot;&gt;&lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot;/&gt;&lt;/mxCell&gt;&lt;mxCell id=&quot;edge14&quot; value=&quot;ingest&quot; style=&quot;edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;dashed=1;strokeColor=#666666;&quot; edge=&quot;1&quot; parent=&quot;1&quot; source=&quot;structured_data&quot; target=&quot;mv_db&quot;&gt;&lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot;/&gt;&lt;/mxCell&gt;&lt;/root&gt;&lt;/mxGraphModel&gt;&lt;/diagram&gt;&lt;/mxfile&gt;">
+<style>text{-webkit-font-smoothing:antialiased;}</style>
+<defs>
+<marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#333333"/></marker>
+<marker id="arrowGrey" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#666666"/></marker>
+</defs>
+<rect x="0" y="0" width="1600" height="900" fill="#ffffff"/>
+<text x="800.0" y="20" text-anchor="middle" font-family="Helvetica,Arial,sans-serif" font-size="18" font-weight="700" fill="#1a1a1a">How Wealth Intelligence Works</text>
+<rect x="300" y="120" width="460" height="320" rx="6" ry="6" fill="#FFF2CC" stroke="#D6B656" stroke-width="2"/>
+<rect x="820" y="40" width="440" height="300" rx="6" ry="6" fill="#E1D5E7" stroke="#9673A6" stroke-width="2"/>
+<rect x="820" y="380" width="440" height="300" rx="6" ry="6" fill="#FFE6CC" stroke="#D79B00" stroke-width="2"/>
+<rect x="1340" y="40" width="220" height="300" rx="6" ry="6" fill="#F5F5F5" stroke="#666666" stroke-width="2" stroke-dasharray="6,4"/>
+<rect x="1340" y="380" width="220" height="220" rx="6" ry="6" fill="#F5F5F5" stroke="#666666" stroke-width="2" stroke-dasharray="6,4"/>
+<path d="M 220 425 L 255 425 L 255 335 L 330 335" fill="none" stroke="#333333" stroke-width="1.5" marker-end="url(#arrow)"/>
+<rect x="208.4" y="371.0" width="93.2" height="16" fill="#ffffff" opacity="0.92"/>
+<text x="255.0" y="384.0" text-anchor="middle" font-family="Helvetica,Arial,sans-serif" font-size="11" fill="#333333">user question</text>
+<path d="M 330 375 L 265 375 L 265 615 L 220 615" fill="none" stroke="#333333" stroke-width="1.5" marker-end="url(#arrow)"/>
+<rect x="234.4" y="486.0" width="61.2" height="16" fill="#ffffff" opacity="0.92"/>
+<text x="265.0" y="499.0" text-anchor="middle" font-family="Helvetica,Arial,sans-serif" font-size="11" fill="#333333">response</text>
+<path d="M 130 570 L 130 470" fill="none" stroke="#333333" stroke-width="1.5" marker-end="url(#arrow)"/>
+<rect x="73.8" y="511.0" width="112.4" height="16" fill="#ffffff" opacity="0.92"/>
+<text x="130.0" y="524.0" text-anchor="middle" font-family="Helvetica,Arial,sans-serif" font-size="11" fill="#333333">validated answer</text>
+<path d="M 530 260 L 530 285" fill="none" stroke="#333333" stroke-width="1.5" marker-end="url(#arrow)"/>
+<rect x="470.6" y="263.5" width="118.8" height="16" fill="#ffffff" opacity="0.92"/>
+<text x="530.0" y="276.5" text-anchor="middle" font-family="Helvetica,Arial,sans-serif" font-size="11" fill="#333333">enrich capability</text>
+<path d="M 530 420 L 530 480" fill="none" stroke="#333333" stroke-width="1.5" marker-end="url(#arrow)" marker-start="url(#arrow)"/>
+<rect x="502.6" y="441.0" width="54.8" height="16" fill="#ffffff" opacity="0.92"/>
+<text x="530.0" y="454.0" text-anchor="middle" font-family="Helvetica,Arial,sans-serif" font-size="11" fill="#333333">context</text>
+<path d="M 730 315 L 780 315 L 780 145 L 850 145" fill="none" stroke="#333333" stroke-width="1.5" marker-end="url(#arrow)"/>
+<rect x="746.2" y="221.0" width="67.6" height="16" fill="#ffffff" opacity="0.92"/>
+<text x="780.0" y="234.0" text-anchor="middle" font-family="Helvetica,Arial,sans-serif" font-size="11" fill="#333333">tool call</text>
+<path d="M 1010 130 L 1030 130 L 1030 125 L 1050 125" fill="none" stroke="#333333" stroke-width="1.5" marker-end="url(#arrow)"/>
+<rect x="1005.8" y="118.5" width="48.4" height="16" fill="#ffffff" opacity="0.92"/>
+<text x="1030.0" y="131.5" text-anchor="middle" font-family="Helvetica,Arial,sans-serif" font-size="11" fill="#333333">search</text>
+<path d="M 1010 160 L 1035 160 L 1035 225 L 1050 225" fill="none" stroke="#333333" stroke-width="1.5" marker-end="url(#arrow)"/>
+<rect x="1010.8" y="183.5" width="48.4" height="16" fill="#ffffff" opacity="0.92"/>
+<text x="1035.0" y="196.5" text-anchor="middle" font-family="Helvetica,Arial,sans-serif" font-size="11" fill="#333333">search</text>
+<path d="M 730 390 L 790 390 L 790 485 L 850 485" fill="none" stroke="#333333" stroke-width="1.5" marker-end="url(#arrow)"/>
+<rect x="756.2" y="428.5" width="67.6" height="16" fill="#ffffff" opacity="0.92"/>
+<text x="790.0" y="441.5" text-anchor="middle" font-family="Helvetica,Arial,sans-serif" font-size="11" fill="#333333">tool call</text>
+<path d="M 1010 485 L 1030 485 L 1030 465 L 1050 465" fill="none" stroke="#333333" stroke-width="1.5" marker-end="url(#arrow)"/>
+<rect x="1002.6" y="466.0" width="54.8" height="16" fill="#ffffff" opacity="0.92"/>
+<text x="1030.0" y="479.0" text-anchor="middle" font-family="Helvetica,Arial,sans-serif" font-size="11" fill="#333333">convert</text>
+<path d="M 1140 500 L 1140 530" fill="none" stroke="#333333" stroke-width="1.5" marker-end="url(#arrow)"/>
+<rect x="1119.0" y="506.0" width="42.0" height="16" fill="#ffffff" opacity="0.92"/>
+<text x="1140.0" y="519.0" text-anchor="middle" font-family="Helvetica,Arial,sans-serif" font-size="11" fill="#333333">query</text>
+<path d="M 730 345 L 800 345 L 800 360 L 1300 360 L 1300 190 L 1340 190" fill="none" stroke="#333333" stroke-width="1.5" marker-end="url(#arrow)"/>
+<rect x="1016.2" y="351.0" width="67.6" height="16" fill="#ffffff" opacity="0.92"/>
+<text x="1050.0" y="364.0" text-anchor="middle" font-family="Helvetica,Arial,sans-serif" font-size="11" fill="#333333">tool call</text>
+<path d="M 730 405 L 810 405 L 810 360 L 1300 360 L 1300 490 L 1340 490" fill="none" stroke="#333333" stroke-width="1.5" marker-end="url(#arrow)"/>
+<rect x="1021.2" y="351.0" width="67.6" height="16" fill="#ffffff" opacity="0.92"/>
+<text x="1055.0" y="364.0" text-anchor="middle" font-family="Helvetica,Arial,sans-serif" font-size="11" fill="#333333">tool call</text>
+<path d="M 925 720 L 790 720 L 790 33 L 1140 33 L 1140 90" fill="none" stroke="#666666" stroke-width="1.5" stroke-dasharray="6,4" marker-end="url(#arrowGrey)"/>
+<rect x="765.8" y="24.0" width="48.4" height="16" fill="#ffffff" opacity="0.92"/>
+<text x="790.0" y="37.0" text-anchor="middle" font-family="Helvetica,Arial,sans-serif" font-size="11" fill="#666666">ingest</text>
+<path d="M 1155 720 L 1155 660 L 1140 660 L 1140 600" fill="none" stroke="#666666" stroke-width="1.5" stroke-dasharray="6,4" marker-end="url(#arrowGrey)"/>
+<rect x="1123.3" y="651.0" width="48.4" height="16" fill="#ffffff" opacity="0.92"/>
+<text x="1147.5" y="664.0" text-anchor="middle" font-family="Helvetica,Arial,sans-serif" font-size="11" fill="#666666">ingest</text>
+<text x="312" y="140" text-anchor="start" font-family="Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#D6B656">
+<tspan x="312" dy="0">LangGraph Multi-Agent Orchestration</tspan>
+</text>
+<text x="832" y="60" text-anchor="start" font-family="Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#9673A6">
+<tspan x="832" dy="0">GraphRAG Knowledge Reasoning</tspan>
+<tspan x="832" dy="16">(Knowledge Base &amp; Knowledge Graph)</tspan>
+</text>
+<text x="832" y="400" text-anchor="start" font-family="Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#D79B00">
+<tspan x="832" dy="0">NL2SQL Query RAG</tspan>
+<tspan x="832" dy="16">(Data View)</tspan>
+</text>
+<text x="1352" y="60" text-anchor="start" font-family="Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#666666">
+<tspan x="1352" dy="0">Legacy Wealth Platform</tspan>
+<tspan x="1352" dy="16">MCP Tools</tspan>
+</text>
+<text x="1352" y="400" text-anchor="start" font-family="Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#666666">
+<tspan x="1352" dy="0">External MCP Servers</tspan>
+<tspan x="1352" dy="16">(non-Wealth / vendor)</tspan>
+</text>
+<rect x="40" y="380" width="180" height="90" rx="10" ry="10" fill="#DAE8FC" stroke="#6C8EBF" stroke-width="1.5"/>
+<text x="130.0" y="417.0" text-anchor="middle" font-family="Helvetica,Arial,sans-serif" font-size="12" fill="#1a1a1a">
+<tspan x="130.0" dy="0" font-weight="700">AI Application UI</tspan>
+<tspan x="130.0" dy="16">(user asks a question)</tspan>
+</text>
+<rect x="40" y="570" width="180" height="90" rx="10" ry="10" fill="#F8CECC" stroke="#B85450" stroke-width="1.5"/>
+<text x="130.0" y="607.0" text-anchor="middle" font-family="Helvetica,Arial,sans-serif" font-size="12" fill="#1a1a1a">
+<tspan x="130.0" dy="0" font-weight="700">Guardrail</tspan>
+<tspan x="130.0" dy="16">Groundedness &amp; trust check</tspan>
+</text>
+<rect x="330" y="165" width="400" height="95" rx="10" ry="10" fill="#FFFFFF" stroke="#D6B656" stroke-width="1.5"/>
+<text x="530.0" y="204.5" text-anchor="middle" font-family="Helvetica,Arial,sans-serif" font-size="12" fill="#1a1a1a">
+<tspan x="530.0" dy="0" font-weight="700">Modular Skills</tspan>
+<tspan x="530.0" dy="16">Equities Search  •  News Research  •  Market Insights</tspan>
+</text>
+<rect x="330" y="285" width="400" height="135" rx="10" ry="10" fill="#FFFFFF" stroke="#D6B656" stroke-width="1.5"/>
+<text x="530.0" y="344.5" text-anchor="middle" font-family="Helvetica,Arial,sans-serif" font-size="12" fill="#1a1a1a">
+<tspan x="530.0" dy="0" font-weight="700">Agents</tspan>
+<tspan x="530.0" dy="16">Planner Agent  •  Research Agent  •  Execution Agent</tspan>
+</text>
+<rect x="300" y="480" width="460" height="90" rx="10" ry="10" fill="#D5E8D4" stroke="#82B366" stroke-width="1.5"/>
+<text x="530.0" y="517.0" text-anchor="middle" font-family="Helvetica,Arial,sans-serif" font-size="12" fill="#1a1a1a">
+<tspan x="530.0" dy="0" font-weight="700">Persistent Multi-Layer Memory</tspan>
+<tspan x="530.0" dy="16">User / client / session context</tspan>
+</text>
+<rect x="850" y="110" width="160" height="70" rx="10" ry="10" fill="#FFFFFF" stroke="#9673A6" stroke-width="1.5"/>
+<text x="930.0" y="145.0" text-anchor="middle" font-family="Helvetica,Arial,sans-serif" font-size="12" fill="#1a1a1a">
+<tspan x="930.0" dy="0" font-weight="700">MCP Server</tspan>
+</text>
+<rect x="1050" y="90" width="180" height="70" rx="10" ry="10" fill="#FFFFFF" stroke="#9673A6" stroke-width="1.5"/>
+<text x="1140.0" y="117.0" text-anchor="middle" font-family="Helvetica,Arial,sans-serif" font-size="12" fill="#1a1a1a">
+<tspan x="1140.0" dy="0" font-weight="700">Vector Database</tspan>
+<tspan x="1140.0" dy="16">(unstructured data index)</tspan>
+</text>
+<rect x="1050" y="190" width="180" height="70" rx="10" ry="10" fill="#FFFFFF" stroke="#9673A6" stroke-width="1.5"/>
+<text x="1140.0" y="217.0" text-anchor="middle" font-family="Helvetica,Arial,sans-serif" font-size="12" fill="#1a1a1a">
+<tspan x="1140.0" dy="0" font-weight="700">Knowledge Database</tspan>
+<tspan x="1140.0" dy="16">(data-to-data relationships)</tspan>
+</text>
+<rect x="850" y="450" width="160" height="70" rx="10" ry="10" fill="#FFFFFF" stroke="#D79B00" stroke-width="1.5"/>
+<text x="930.0" y="485.0" text-anchor="middle" font-family="Helvetica,Arial,sans-serif" font-size="12" fill="#1a1a1a">
+<tspan x="930.0" dy="0" font-weight="700">MCP Server</tspan>
+</text>
+<rect x="1050" y="430" width="180" height="70" rx="10" ry="10" fill="#FFFFFF" stroke="#D79B00" stroke-width="1.5"/>
+<text x="1140.0" y="465.0" text-anchor="middle" font-family="Helvetica,Arial,sans-serif" font-size="12" fill="#1a1a1a">
+<tspan x="1140.0" dy="0" font-weight="700">NL2SQL Engine</tspan>
+</text>
+<rect x="1050" y="530" width="180" height="70" rx="10" ry="10" fill="#FFFFFF" stroke="#D79B00" stroke-width="1.5"/>
+<text x="1140.0" y="557.0" text-anchor="middle" font-family="Helvetica,Arial,sans-serif" font-size="12" fill="#1a1a1a">
+<tspan x="1140.0" dy="0" font-weight="700">Database</tspan>
+<tspan x="1140.0" dy="16">(materialized view snapshots)</tspan>
+</text>
+<rect x="1360" y="100" width="180" height="60" rx="10" ry="10" fill="#FFFFFF" stroke="#666666" stroke-width="1.5" stroke-dasharray="6,4"/>
+<text x="1450.0" y="122.0" text-anchor="middle" font-family="Helvetica,Arial,sans-serif" font-size="12" fill="#1a1a1a">
+<tspan x="1450.0" dy="0" font-weight="700">Trading Platform</tspan>
+<tspan x="1450.0" dy="16">MCP</tspan>
+</text>
+<rect x="1360" y="170" width="180" height="60" rx="10" ry="10" fill="#FFFFFF" stroke="#666666" stroke-width="1.5" stroke-dasharray="6,4"/>
+<text x="1450.0" y="192.0" text-anchor="middle" font-family="Helvetica,Arial,sans-serif" font-size="12" fill="#1a1a1a">
+<tspan x="1450.0" dy="0" font-weight="700">Portfolio Management</tspan>
+<tspan x="1450.0" dy="16">MCP</tspan>
+</text>
+<rect x="1360" y="240" width="180" height="60" rx="10" ry="10" fill="#FFFFFF" stroke="#666666" stroke-width="1.5" stroke-dasharray="6,4"/>
+<text x="1450.0" y="262.0" text-anchor="middle" font-family="Helvetica,Arial,sans-serif" font-size="12" fill="#1a1a1a">
+<tspan x="1450.0" dy="0" font-weight="700">Financial Planning</tspan>
+<tspan x="1450.0" dy="16">MCP</tspan>
+</text>
+<rect x="1360" y="440" width="180" height="55" rx="10" ry="10" fill="#FFFFFF" stroke="#666666" stroke-width="1.5" stroke-dasharray="6,4"/>
+<text x="1450.0" y="467.5" text-anchor="middle" font-family="Helvetica,Arial,sans-serif" font-size="12" fill="#1a1a1a">
+<tspan x="1450.0" dy="0" font-weight="700">LSEG MCP</tspan>
+</text>
+<rect x="1360" y="505" width="180" height="55" rx="10" ry="10" fill="#FFFFFF" stroke="#666666" stroke-width="1.5" stroke-dasharray="6,4"/>
+<text x="1450.0" y="532.5" text-anchor="middle" font-family="Helvetica,Arial,sans-serif" font-size="12" fill="#1a1a1a">
+<tspan x="1450.0" dy="0" font-weight="700">FactSet MCP</tspan>
+</text>
+<rect x="820" y="720" width="210" height="110" rx="10" ry="10" fill="#F5F5F5" stroke="#666666" stroke-width="1.5" stroke-dasharray="6,4"/>
+<text x="925.0" y="759.0" text-anchor="middle" font-family="Helvetica,Arial,sans-serif" font-size="12" fill="#1a1a1a">
+<tspan x="925.0" dy="0" font-weight="700">Unstructured Data</tspan>
+<tspan x="925.0" dy="16">Articles, reports,</tspan>
+<tspan x="925.0" dy="16">webpages, files</tspan>
+</text>
+<rect x="1050" y="720" width="210" height="110" rx="10" ry="10" fill="#F5F5F5" stroke="#666666" stroke-width="1.5" stroke-dasharray="6,4"/>
+<text x="1155.0" y="759.0" text-anchor="middle" font-family="Helvetica,Arial,sans-serif" font-size="12" fill="#1a1a1a">
+<tspan x="1155.0" dy="0" font-weight="700">Structured Data</tspan>
+<tspan x="1155.0" dy="16">Databases,</tspan>
+<tspan x="1155.0" dy="16">interface files</tspan>
+</text>
+</svg>

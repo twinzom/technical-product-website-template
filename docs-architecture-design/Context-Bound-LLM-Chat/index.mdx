@@ -1,0 +1,33 @@
+---
+sidebar_position: 8
+---
+
+# Context-Bound LLM Chat
+
+Context-Bound LLM Chat is the enforcement layer behind [Wealth Intelligence Chat](/product-overview/Wealth-Intelligence-Chat) that scopes every turn of a conversation to what the requesting user is actually entitled to see. It governs *which* evidence an agent is allowed to retrieve, in contrast to the [Groundedness Check](./Groundedness-Check), which governs whether a response is faithful to the evidence it retrieved.
+
+## What Gets Bound
+
+Each chat turn carries a context envelope that constrains retrieval and tool calls for that turn alone:
+
+| Binding | Source | Constrains |
+|---|---|---|
+| User identity & entitlements | Auth/entitlement service | Which clients, households, and books of business the user can query |
+| Client/household scope | Active conversation selection | Which entities the [Knowledge Graph](./Knowledge-Graph) traversal and NL2SQL queries may touch |
+| Session state | Persistent Multi-Layer Memory | Which prior turns and retrieved context carry forward |
+
+## Why Binding Happens Before Retrieval
+
+Filtering results after retrieval isn't sufficient in a multi-tenant advisory platform — a broad GraphRAG or NL2SQL query could surface another client's holdings or a document outside the user's mandate before any output filter runs, and a plausible-sounding answer built on that leaked context wouldn't necessarily be caught by a downstream check. Context binding closes that gap earlier: entitlement scope is compiled into the GraphRAG and NL2SQL calls themselves — as graph-traversal boundaries and query predicates — so out-of-scope entities and rows are never returned to the agent in the first place, not merely hidden from the final response.
+
+## Session Isolation
+
+Persistent Multi-Layer Memory keeps user, client, and session context across a conversation for continuity, which means stale context is a real risk if a user switches between clients or households mid-session. Context-Bound LLM Chat rebinds the active scope on every client switch, and session memory carried forward is filtered to the newly active scope rather than assumed to still apply.
+
+## Relationship to the Groundedness Check
+
+Context binding and the Groundedness Check are deliberately separate concerns that both run in the live request path: binding restricts what an agent can retrieve before it reasons, while the Groundedness Check verifies what an agent says afterward is actually supported by what it retrieved. A response can pass one and still fail the other — for example, a correctly-scoped retrieval doesn't guarantee the generated response stays faithful to it, and a faithful response is worthless if the evidence behind it should never have been in scope.
+
+## Where It Fits
+
+Context-Bound LLM Chat wraps the AI Application UI's entry point described in the [Product Overview](/product-overview)'s "How It Works" section, ahead of every call agents make to GraphRAG, NL2SQL, and MCP tools.
